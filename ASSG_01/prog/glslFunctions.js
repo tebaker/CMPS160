@@ -18,8 +18,6 @@ function sendUniformFloatToGLSL(val, uniformName) {
  * @param {Array} val Array (vector) being passed to uniform variable
  * @param {String} uniformName The name of the uniform variable
  */
-function sendUniformVec4ToGLSL(val, uniformName) {
-  //
-  // YOUR CODE HERE
-  //
+function sendUniformVec4ToGLSL(val, uniformName, u_FragColor, r, g, b) {
+  gl.uniform4f(u_FragColor, r, g, b, 1.0);
 }

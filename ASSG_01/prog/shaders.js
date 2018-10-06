@@ -9,6 +9,8 @@ let ASSIGN1_VSHADER =
 
 // Basic Fragment Shader that receives a single one color (point).
 let ASSIGN1_FSHADER =
-  `void main() {
-  	gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+  `precision mediump float;
+   uniform vec4 u_FragColor;
+   void main() {
+  	gl_FragColor = u_FragColor;
   }`;

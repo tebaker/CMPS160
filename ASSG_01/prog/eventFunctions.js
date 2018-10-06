@@ -46,7 +46,7 @@ function click(ev, canvas) {
 /**
  * Renders the scene on the HTML canvas.
  */
-function render(gl, a_Position, a_PointSize) {
+function render(gl, a_Position, a_PointSize, u_FragColor) {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -67,6 +67,8 @@ function render(gl, a_Position, a_PointSize) {
     gl.vertexAttrib1f(a_PointSize, s);
 
     gl.drawArrays(gl.POINTS, 0, 1);
+
+    gl.uniform4f(u_FragColor, r, g, b, 1.0);
   }
 }
 
