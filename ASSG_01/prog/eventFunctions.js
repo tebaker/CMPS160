@@ -1,9 +1,16 @@
 // Making clicked points a global because it's used all over the place
-let clickedPoints = [{
-	let coords: {float, float},
-	let color: {float, float, float},
-	let size: int
-}];
+class pointData {
+  constructor(x, y, r, g, b, size) {
+  	this.x = x;
+  	this.y = y;
+  	this.r = r;
+  	this.g = g;
+  	this.b = b;
+  	this.size = size;
+  }
+};
+
+let clickedPoints = [];
 
 // Making a 
 
@@ -23,12 +30,16 @@ function click(ev, canvas) {
   document.getElementById("clickedPointsText").innerHTML = "x: " + x + " y: " + y;
 
   // Grabbing color data from sliders
-  let redSliderValue = document.getElementById("redSlider").value/255;
-  let greenSliderValue = document.getElementById("greenSlider").value/255;
-  let blueSliderValue = document.getElementById("blueSlider").value/255;
-  let sizeSliderValue = document.getElementById("sizeSlider").value;
+  let r = document.getElementById("redSlider").value/255;
+  let g = document.getElementById("greenSlider").value/255;
+  let b = document.getElementById("blueSlider").value/255;
+  let size = document.getElementById("sizeSlider").value;
 
   // console.log("red: " + redSliderValue + "\n" +  "green: " + greenSliderValue + "\n" + "blue: " + blueSliderValue + "\n" + "size: " + sizeSliderValue);
+
+  let newPointData = new pointData(x, y, r, g, b, size);
+
+  clickedPoints.push(newPointData)
 
 }
 
@@ -36,25 +47,27 @@ function click(ev, canvas) {
  * Renders the scene on the HTML canvas.
  */
 function render(gl, a_Position, a_PointSize) {
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
   for(let i = 0; i < clickedPoints.length; ++i) {
-  	let x = clickedPoints[i].coords.x;
-  	let y = clickedPoints[i].coords.y;
-  	let r = clickedPoints[i].color.r;
-  	let g = clickedPoints[i].color.g;
-  	let b = clickedPoints[i].color.b;
-  	let size = clickedPoints[i].size;
+  	let x = clickedPoints[i].x;
+  	let y = clickedPoints[i].y;
+  	let r = clickedPoints[i].r;
+  	let g = clickedPoints[i].g;
+  	let b = clickedPoints[i].b;
+  	let s = clickedPoints[i].size;
+
+  	console.log(i + ") " + "x: " + x + " y: " + y + " r: " + r + " g: " + g + " b: " + b + " s: " + s);
 
   	// Pass vertex position to attribute variable
     gl.vertexAttrib3f(a_Position, x, y, 0.0);
 
     // Pass vertex position to attribute variable
-    gl.vertexAttrib1f(a_PointSize, size);
-  }
+    gl.vertexAttrib1f(a_PointSize, s);
 
-  // Setting clear color, clearing canvas, drawing points only need to happen once
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.POINTS, 0, 1);
+    gl.drawArrays(gl.POINTS, 0, 1);
+  }
 }
 
 /**
