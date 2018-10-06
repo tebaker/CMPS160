@@ -1,8 +1,3 @@
-
-/**
- * Responsible for initializing buttons, sliders, radio buttons, etc. present
- * within your HTML document.
- */
 function initEventHandelers() {
   //
   // YOUR CODE HERE
