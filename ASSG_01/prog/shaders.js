@@ -12,5 +12,5 @@ let ASSIGN1_FSHADER =
   `precision mediump float;
    uniform vec4 u_FragColor;
    void main() {
-  	gl_FragColor = u_FragColor;
+  	gl_FragColor = u_FragColor; // Set fragment color from main
   }`;

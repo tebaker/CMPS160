@@ -47,14 +47,13 @@ function main() {
   
   // Function for when the mouse is pressed
   canvas.onmousedown = function(ev) {
+  	isMouseDown = true
   	click(ev, canvas);
-
   	render(gl, a_Position, a_PointSize, u_FragColor);
   }
 
-  let isMouseDown = false;
-  canvas.onmousedown = function() { isMouseDown = true  };
-  canvas.onmouseup   = function() { isMouseDown = false };
+  var isMouseDown = false;
+  document.onmouseup   = function() { isMouseDown = false };
   canvas.onmousemove = function(ev) { if(isMouseDown) {
   	click(ev, canvas);
   	render(gl, a_Position, a_PointSize, u_FragColor);

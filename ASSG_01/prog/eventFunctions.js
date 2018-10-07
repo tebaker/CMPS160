@@ -1,4 +1,6 @@
 
+// I've decided to not make gl a global variable. I'm doing this so I know exactly where and why I'm passing it into everything
+
 // Holding the clicked point's positions
 let posPoints = [];
 
@@ -9,8 +11,7 @@ let colorPoints = [];
 let sizePoints = [];
 
 function initEventHandelers() {
-  // I'm not sure what this function is supposed to be initializing.. but it's not working the way I think it should work.
-}
+  // I'm defining my event handlers in Main
 
 // Upon mouse down event, click will collect mouse (x, y) data and store it in clickedPoints array
 function click(ev, canvas) {
@@ -33,14 +34,11 @@ function click(ev, canvas) {
 
   // console.log("red: " + redSliderValue + "\n" +  "green: " + greenSliderValue + "\n" + "blue: " + blueSliderValue + "\n" + "size: " + sizeSliderValue);
 
-  // let newPointData = new pointData(x, y, r, g, b, size);
-
   changePointCoord({x: xCoord, y: yCoord});
   changePointColor({r: rColor, g: gColor, b: bColor});
   changePointSize(size);
 
   // console.log(posPoints.length + " " + colorPoints.length + " " + sizePoints.length + " ");
-
   // console.log("x: " + xCoord + " y: " + yCoord);
 
 }
@@ -64,22 +62,14 @@ function render(gl, a_Position, a_PointSize, u_FragColor) {
 
   	// console.log(i + ") " + "x: " + x + " y: " + y + " r: " + r + " g: " + g + " b: " + b + " s: " + s);
 
-  	sendUniformFloatToGLSL(gl, [x, y, 0.0], a_Position)
-
-  	// // Pass vertex position to attribute variable
-   //  gl.vertexAttrib3f(a_Position, x, y, 0.0);
+  	sendUniformFloatToGLSL(gl, [x, y, 0.0], a_Position);
 
     // Pass vertex position to attribute variable
     gl.vertexAttrib1f(a_PointSize, s);
 
-    sendUniformVec4ToGLSL(gl, [r, g, b, 1.0], u_FragColor)
-
-    // // Pass color uniform to fragment shader
-    // gl.uniform4f(u_FragColor, r, g, b, 1.0);
+    sendUniformVec4ToGLSL(gl, [r, g, b, 1.0], u_FragColor);
 
     gl.drawArrays(gl.POINTS, 0, 1);
-
-    
   }
 }
 
