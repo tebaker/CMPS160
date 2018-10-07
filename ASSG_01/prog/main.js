@@ -47,10 +47,24 @@ function main() {
   
   // Function for when the mouse is pressed
   canvas.onmousedown = function(ev) {
-  	// The mouse is clicked: color, size, position are updated
   	click(ev, canvas);
 
-  	// All point data is rendered
   	render(gl, a_Position, a_PointSize, u_FragColor);
   }
+
+  let isMouseDown = false;
+  canvas.onmousedown = function() { isMouseDown = true  };
+  canvas.onmouseup   = function() { isMouseDown = false };
+  canvas.onmousemove = function(ev) { if(isMouseDown) {
+  	click(ev, canvas);
+  	render(gl, a_Position, a_PointSize, u_FragColor);
+  } };
+
+
+	document.getElementById("clearButton").addEventListener("click", myFunction);
+
+	function myFunction() {
+		clearCanvas(gl);
+	}
+
 }

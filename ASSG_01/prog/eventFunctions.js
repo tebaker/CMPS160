@@ -39,7 +39,7 @@ function click(ev, canvas) {
   changePointColor({r: rColor, g: gColor, b: bColor});
   changePointSize(size);
 
-  console.log(posPoints.length + " " + colorPoints.length + " " + sizePoints.length + " ");
+  // console.log(posPoints.length + " " + colorPoints.length + " " + sizePoints.length + " ");
 
   // console.log("x: " + xCoord + " y: " + yCoord);
 
@@ -60,18 +60,22 @@ function render(gl, a_Position, a_PointSize, u_FragColor) {
   	let g = colorPoints[i].g;
   	let b = colorPoints[i].b;
 
-  	let s = sizePoints[i].size;
+  	let s = sizePoints[i];
 
-  	console.log(i + ") " + "x: " + x + " y: " + y + " r: " + r + " g: " + g + " b: " + b + " s: " + s);
+  	// console.log(i + ") " + "x: " + x + " y: " + y + " r: " + r + " g: " + g + " b: " + b + " s: " + s);
 
-  	// Pass vertex position to attribute variable
-    gl.vertexAttrib3f(a_Position, x, y, 0.0);
+  	sendUniformFloatToGLSL(gl, [x, y, 0.0], a_Position)
+
+  	// // Pass vertex position to attribute variable
+   //  gl.vertexAttrib3f(a_Position, x, y, 0.0);
 
     // Pass vertex position to attribute variable
     gl.vertexAttrib1f(a_PointSize, s);
 
-    // Pass color uniform to fragment shader
-    gl.uniform4f(u_FragColor, r, g, b, 1.0);
+    sendUniformVec4ToGLSL(gl, [r, g, b, 1.0], u_FragColor)
+
+    // // Pass color uniform to fragment shader
+    // gl.uniform4f(u_FragColor, r, g, b, 1.0);
 
     gl.drawArrays(gl.POINTS, 0, 1);
 
@@ -82,10 +86,13 @@ function render(gl, a_Position, a_PointSize, u_FragColor) {
 /**
  * Clears the HTML canvas.
  */
-function clearCanvas() {
-  //
-  // YOUR CODE HERE
-  //
+function clearCanvas(gl) {
+  posPoints = [];
+  colorPoints = [];
+  sizePoints = [];
+
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
 /**
