@@ -5,7 +5,6 @@
  * @param {String} htmlID The ID of an html element.
  */
 function sendTextToHTML(text, htmlID) {
-    //
-    // YOUR CODE HERE
-    //
+  // Updating the HTML from current clicked points
+  document.getElementById(htmlID).innerHTML = text;
 }

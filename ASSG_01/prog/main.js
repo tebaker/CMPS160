@@ -47,25 +47,10 @@ function main() {
   
   // Function for when the mouse is pressed
   canvas.onmousedown = function(ev) {
+  	// The mouse is clicked: color, size, position are updated
   	click(ev, canvas);
+
+  	// All point data is rendered
   	render(gl, a_Position, a_PointSize, u_FragColor);
   }
-
-  
-
-  // // Pass vertex position to attribute variable
-  // gl.vertexAttrib3f(a_Position, 0.0, 0.0, 0.0);
-
-  // // Pass vertex position to attribute variable
-  // gl.vertexAttrib1f(a_PointSize, 100.0);
-
-  // // Set the color of clearing <canvas>
-  // gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-  // // Clear <canvas>
-  // gl.clear(gl.COLOR_BUFFER_BIT);
-
-  // // Draw a point
-  // gl.drawArrays(gl.POINTS, 0, 1);
-
 }
