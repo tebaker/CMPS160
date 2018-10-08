@@ -60,10 +60,30 @@ function main() {
   } };
 
 
-	document.getElementById("clearButton").addEventListener("click", myFunction);
+	document.getElementById("clearButton").addEventListener("click",
+		function myFunction() {
+			console.log("1");
+			clearCanvas(gl);
+		}
+	);
 
-	function myFunction() {
-		clearCanvas(gl);
-	}
+	document.getElementById("squaresButton").addEventListener("click",
+		function myFunction() {
+			console.log("2");
+		}
+	);
+
+	document.getElementById("trianglesButton").addEventListener("click",
+		function myFunction() {
+			console.log("3");	
+		}
+	);
+
+	document.getElementById("circlesButton").addEventListener("click",
+		function myFunction() {
+			console.log("4");
+		}
+	);
+
 
 }
