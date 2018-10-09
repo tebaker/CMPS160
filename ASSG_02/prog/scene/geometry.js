@@ -1,7 +1,7 @@
 /**
  * Specifies a geometric object.
  *
- * @author "Your Name Here"
+ * @author Talon Baker
  * @this {Geometry}
  */
 class Geometry {
