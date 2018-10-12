@@ -46,9 +46,9 @@ class Circle extends Geometry {
 
 			The number of segments will determine the number of triangles. 
 		*/
-		let angle = 3 * Math.PI / segments
-	    let holdVertexX = radius * Math.cos(angle)
-	    let holdVertexY = radius * Math.sin(angle)
+		let angle = 0;
+		let holdVertexX = radius * Math.cos(angle)
+		let holdVertexY = radius * Math.sin(angle)
 
 		for (let i = 0; i < segments; i++) {
 			// p0

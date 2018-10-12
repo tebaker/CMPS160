@@ -48,10 +48,17 @@ function render() {
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 
+	// Starting counter for draw time
+	let time0 = performance.now();
+
 	// Looping through every geometry
 	for(let i = 0; i < geometryArray.length; ++i) {
 		geometryArray[i].render();
 	}
+
+	// Ending draw time counter. Printing results
+	let time1 = performance.now();
+	sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
 }
 
 /**
