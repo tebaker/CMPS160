@@ -7,17 +7,19 @@
  * @param {String} attribName The name of the attribute variable
  */
 function sendAttributeBufferToGLSL(data, dataCount, attribName) {
-  //
-  // YOUR CODE HERE
-  //
+	let vertexBuffer = gl.createBuffer();
+	if(!vertexBuffer) {
+		console.log("Vertex buffer failed to create");
+	}
+	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
-  // Recommendations: This piece of code should do these three things:
-  // 1. Create a an attribute buffer
-  // 2. Bind data to that buffer
-  // 3. Enable the buffer for use
-  //
-  // Some modifications can be made to this function to improve performance. Ask
-  // a TA in lab if you're interested in these modifications.
+	gl.bufferData(gl.ARRAY_BUFFER, attribName, gl.STATIC_DRAW);
+
+	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
+
+	gl.enableVertexAttribArray(a_Position);
+
+	tellGLSLToDrawCurrentBuffer(dataCount);
 }
 
 /**
@@ -25,12 +27,8 @@ function sendAttributeBufferToGLSL(data, dataCount, attribName) {
  *
  * @param {Integer} pointCount The amount of vertices being drawn from the buffer.
  */
-function tellGLSLToDrawCurrentBuffer(pointCount) {
-  //
-  // YOUR CODE HERE
-  //
-
-  // Recommendations: Should only be one line of code.
+function tellGLSLToDrawCurrentBuffer(dataCount) {
+	gl.drawArrays(gl.TRIANGLES, 0, dataCount);
 }
 
 /**

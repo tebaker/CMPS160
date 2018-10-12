@@ -19,21 +19,24 @@ function click(ev) {
 
 	let segCount = document.getElementById("segmentSlider").value;
 
-	console.log("x: " + xCoord + " y: " + yCoord);
-	console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
-	console.log("size: " + size + " segCount: " + segCount);
+	// console.log("x: " + xCoord + " y: " + yCoord);
+	// console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
+	// console.log("size: " + size + " segCount: " + segCount);
 
 	switch(shapeFlag) {
 	case "square":
-		createSquare(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newSquare = new Square(xCoord, yCoord, rColor, gColor, bColor, size);
+		scene.addGeometry(newSquare);
 		break;
 
 	case "triangle":
-		createTriangle(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newTriangle = new Triangle(xCoord, yCoord, rColor, gColor, bColor, size);
+		scene.addGeometry(newTriangle);
 		break;
 
 	case "circle":
-		createCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
+		let newCircle = new Circle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
+		scene.addGeometry(newCircle);
 		break;
 
 	default:
@@ -45,49 +48,35 @@ function click(ev) {
 * Renders the scene on the HTML canvas.
 */
 function render() {
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-	gl.clear(gl.COLOR_BUFFER_BIT);
-
-	// Starting counter for draw time
-	let time0 = performance.now();
-
-	// Looping through every geometry
-	for(let i = 0; i < geometryArray.length; ++i) {
-		geometryArray[i].render();
-	}
-
-	// Ending draw time counter. Printing results
-	let time1 = performance.now();
-	sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
+	scene.render();
 }
 
 /**
 * Clears the HTML canvas.
 */
 function clearCanvas(gl) {
-	geometryArray = [];
-
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-	gl.clear(gl.COLOR_BUFFER_BIT);
+	scene.clearGeometry();
 }
 
-function createSquare(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-	let newSquare = new Square(centerX, centerY, rVal, gVal, bVal, sizeVal);
-	geometryArray.push(newSquare);
-}
+// function createSquare(centerX, centerY, rVal, gVal, bVal, sizeVal) {
+// 	let newSquare = new Square(centerX, centerY, rVal, gVal, bVal, sizeVal);
+// 	scene.addGeometry(newSquare);
+// }
 
-function createTriangle(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-	let newTriangle = new Triangle(centerX, centerY, rVal, gVal, bVal, sizeVal);
-	geometryArray.push(newTriangle);
-}
+// function createTriangle(centerX, centerY, rVal, gVal, bVal, sizeVal) {
+// 	let newTriangle = new Triangle(centerX, centerY, rVal, gVal, bVal, sizeVal);
+// 	scene.addGeometry(newTriangle);
+// }
 
-function createCircle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount) {
-	let newCircle = new Circle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount);
-	geometryArray.push(newCircle);
-}
+// function createCircle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount) {
+// 	let newCircle = new Circle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount);
+// 	scene.addGeometry(newCircle);
+// }
 
 // Definind all the event handlers. Global declerations in main
 function initEventHandelers() {
+	scene = new Scene()
+
 	// Retrieve <canvas> element
 	canvas = document.getElementById('webgl');
 	if(!canvas) {

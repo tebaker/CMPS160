@@ -5,7 +5,7 @@ let shapeFlag = "square"; // Default shape is square
 let canvas, gl, a_Position, a_PointSize, u_FragColor;
 
 // Clicked points geometry array
-let geometryArray = [];
+let scene;
 
 /**
  * Function called when the webpage loads.

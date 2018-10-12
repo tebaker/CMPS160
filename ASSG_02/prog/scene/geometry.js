@@ -22,24 +22,15 @@ class Geometry {
 	* Renders this Geometry within your webGL scene.
 	*/
 	render() {
+
 		sendUniformVec4ToGLSL(gl, [this.color.r, this.color.g, this.color.b, 1.0], u_FragColor);
 
 		let renderVertices = new Float32Array(this.vertices);
 		let n = this.vertices.length / 3;
 
-		let vertexBuffer = gl.createBuffer();
-		if(!vertexBuffer) {
-			console.log("Vertex buffer failed to create");
-		}
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+		sendAttributeBufferToGLSL(this.vertices, n, renderVertices);
 
-		gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
-
-		gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
-
-		gl.enableVertexAttribArray(a_Position);
-
-		gl.drawArrays(gl.TRIANGLES, 0, n);
+		
 	}
 }

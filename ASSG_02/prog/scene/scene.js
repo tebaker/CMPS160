@@ -1,58 +1,55 @@
 /**
- * Specifies a WebGL scene.
- *
- * @author "Your Name Here"
- * @this {Scene}
- */
+* Specifies a WebGL scene.
+*
+* @author Talon Baker
+* @this {Scene}
+*/
 class Scene {
-  /**
-   * Constructor for Scene.
-   *
-   * @constructor
-   */
-  constructor() {
-    this.geometries = []; // Geometries being drawn on canvas
-    //
-    // YOUR CODE HERE
-    //
+	/**
+	* Constructor for Scene.
+	*
+	* @constructor
+	*/
+	constructor() {
+		this.geometries = []; // Geometries being drawn on canvas
+	}
 
-    // Recommendations: Setting the canvas's clear color and clearing the canvas
-    // here is a good idea.
-  }
+	/**
+	* Adds the given geometry to the the scene.
+	*
+	* @param {Geometry} geometry Geometry being added to scene
+	*/
+	addGeometry(geometry) {
+		this.geometries.push(geometry);
+	}
 
-  /**
-   * Adds the given geometry to the the scene.
-   *
-   * @param {Geometry} geometry Geometry being added to scene
-   */
-  addGeometry(geometry) {
-    //
-    // YOUR CODE HERE
-    //
-  }
+	/**
+	* Clears all the geometry within the scene.
+	*/
+	clearGeometry() {
+		this.geometries = [];
 
-  /**
-   * Clears all the geometry within the scene.
-   */
-  clearGeometry() {
-    //
-    // YOUR CODE HERE
-    //
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+	}
 
-    // Recommendations: It would be best to call this.render() at the end of
-    // this call.
-  }
+	/**
+	* Renders all the Geometry within the scene.
+	*/
+	render() {
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
 
-  /**
-   * Renders all the Geometry within the scene.
-   */
-  render() {
-    //
-    // YOUR CODE HERE
-    //
+		// Starting counter for draw time
+		let time0 = performance.now();
 
-    // Recommendations: No calls to any of your GLSL functions should be made
-    // here. Your Geometry objects in this.geometries should render themselves
-    // through their own .render() methods.
-  }
+		// Looping through every geometry
+		for(let i = 0; i < this.geometries.length; ++i) {
+			this.geometries[i].render();
+		}
+
+		// Ending draw time counter. Printing results
+		let time1 = performance.now();
+		sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
+	}
 }
