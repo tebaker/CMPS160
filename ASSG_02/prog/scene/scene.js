@@ -11,7 +11,7 @@ class Scene {
 	* @constructor
 	*/
 	constructor() {
-		this.geometries = []; // Geometries being drawn on canvas
+		this.geometries = []; // Geometries to be drawn
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Scene {
 			this.geometries[i].render();
 		}
 
-		// Ending draw time counter. Printing results
+		// Ending counter. Printing results
 		let time1 = performance.now();
 		sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
 	}
