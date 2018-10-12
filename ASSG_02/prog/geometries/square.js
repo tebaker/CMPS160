@@ -34,10 +34,10 @@ class Square extends Geometry {
 	*/
 	generateSquareVertices(centerX, centerY, size) {
 		/*
-			p1*-----*p2       *p2
-			  |   /         / |
-			  | /        /    |
-			p0*      p0*------*p3
+			p1*-----*p2   *p2
+			  |   /     / |
+			  | /     /   |
+			p0*   p0*-----*p3
 
 			First triangle: p0, p1, p2
 

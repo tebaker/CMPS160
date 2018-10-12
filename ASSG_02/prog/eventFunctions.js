@@ -33,7 +33,7 @@ function click(ev) {
 		break;
 
 	case "circle":
-
+		createCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
 		break;
 
 	default:
@@ -74,8 +74,9 @@ function createTriangle(centerX, centerY, rVal, gVal, bVal, sizeVal) {
 	geometryArray.push(newTriangle);
 }
 
-function createCircle(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-
+function createCircle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount) {
+	let newCircle = new Circle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount);
+	geometryArray.push(newCircle);
 }
 
 // Definind all the event handlers. Global declerations in main

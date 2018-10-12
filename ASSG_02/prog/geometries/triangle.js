@@ -15,7 +15,7 @@ class Triangle extends Geometry {
 	*/
 	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
 		super();
-		super.shape = "square";
+		super.shape = "triangle";
 		super.centerPoint = {x: centerX, y: centerY};
 		super.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
