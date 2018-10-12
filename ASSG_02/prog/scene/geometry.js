@@ -1,44 +1,45 @@
 /**
- * Specifies a geometric object.
+ * Specifies a geometric object
  *
  * @author Talon Baker
  * @this {Geometry}
  */
 class Geometry {
-	/**
-	* Constructor for Geometry.
-	*
-	* @constructor
-	*/
+
 	constructor() {
+		this.shape = "";
 		this.centerPoint = {x: 0.0, y: 0.0}; // Vertex objects. Each vertex has x-y-z
 		this.color = {r: 0.0, g: 0.0, b: 0.0};  // The color of your geometric object
 		this.size = 0.0; // Size length or radius of object
+		this.vertices = [];
 	}
 
-	setCenterPoint(centerX, centerY) {
-		this.centerPoint = {x: centerX, y: centerY};
+	vertexPush(vertex) {
+		this.vertices.push(vertex);
 	}
-
-	setColor(rVal, gVal, bVal) {
-		this.color = {r: rVal, g: gVal, b: bVal};
-	}
-	
-	setSize(sizeVal) {
-		this.size = sizeVal;
-	}
-
-
 
 	/**
 	* Renders this Geometry within your webGL scene.
 	*/
 	render() {
-	//
-	// YOUR CODE HERE
-	//
+		sendUniformVec4ToGLSL(gl, [this.color.r, this.color.g, this.color.b, 1.0], u_FragColor);
 
-	// Recommendations: sendUniformVec4ToGLSL(), tellGLSLToDrawCurrentBuffer(),
-	// and sendAttributeBufferToGLSL() are going to be useful here.
+		let renderVertices = new Float32Array(this.vertices);
+		let n = this.vertices.length / 2;
+
+		let vertexBuffer = gl.createBuffer();
+		if(!vertexBuffer) {
+			console.log("Vertex buffer failed to create");
+		}
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+		gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
+
+		gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+
+		gl.enableVertexAttribArray(a_Position);
+
+		gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
 	}
-	}
+}

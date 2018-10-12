@@ -1,67 +1,43 @@
+// Global declerations
+let shapeFlag = "square"; // Default shape is square
 
-// The program defaults to square shape to start
-let shapeFlag = "square";
+// All the event handlers
+let canvas, gl, a_Position, a_PointSize, u_FragColor;
+
+// Clicked points geometry array
+let geometryArray = [];
 
 /**
  * Function called when the webpage loads.
  */
 function main() {
-	// Retrieve <canvas> element
-	let canvas = document.getElementById('webgl');
-	if(!canvas) {
-		console.log("Failed to retrieve the <canvas> element");
-		return;
-	}
+	// Initializing all the event handlers defined as globals above
+	initEventHandelers();
 
-	// Get the rendering ontext for WebGL
-	let gl = getWebGLContext(canvas);
-	if(!gl) {
-		console.log('Failed to get the rendering context for WebGL');
-		return;
-	}
-
-	// Initialize shaders
-	if(!initShaders(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER)) {
-		console.log('Failed to initialize shaders');
-		return;
-	}
-
-	// Get the location of attribute variable a_Position
-	let a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-	if (a_Position < 0) {
-		console.log('Fail to get the storage location of a_Position');
-		return;
-	} 
-
-	// Get the location of attribute variable of a_PointSize
-	let a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
-	if (a_PointSize < 0) {
-		console.log('Fail to get the storage location of a_PointSize');
-		return;
-	}
-
-	let u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
-	if(!u_FragColor) {
-		console.log('Failed to get u_FragColor variable');
-		return;
-	}
-
+	// Setting clear color and clearing so screen is black on start
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
+
+	// Flag for if the mouse is currently down or not
+	let isMouseDown = false;
 
 	// Function for when the mouse is pressed
 	canvas.onmousedown = function(ev) {
 		isMouseDown = true
-		click(ev, canvas);
-		render(gl, a_Position, a_PointSize, u_FragColor);
+		click(ev);
+		render();
 	}
 
-	let isMouseDown = false;
-	document.onmouseup   = function() { isMouseDown = false };
+	// Resetting the mouse down flag to false
+	document.onmouseup   = function() {
+		isMouseDown = false
+	};
+
+	// Check for if mouse is being dragged
 	canvas.onmousemove = function(ev) {
 		if(isMouseDown) {
-			click(ev, canvas);
-			render(gl, a_Position, a_PointSize, u_FragColor);
+			click(ev);
+			render();
 		}
 	};
 
@@ -88,6 +64,4 @@ function main() {
 			shapeFlag = "circle";
 		}
 	);
-
-
-}
+}// End main
