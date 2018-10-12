@@ -19,7 +19,7 @@ class Square extends Geometry {
 		super.centerPoint = {x: centerX, y: centerY};
 		super.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
-		super.vertices = [];
+		super.vertices = new Vertex();
 
 		this.generateSquareVertices(centerX, centerY, sizeVal);
 	}
@@ -46,34 +46,46 @@ class Square extends Geometry {
 
 		/*TRIANGLE 1*/
 		// p0
-		this.vertices.push(centerX - size);
-		this.vertices.push(centerY - size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX - size), // x
+			(centerY - size), // y
+			0.0 // z
+		);
 		
 		// p1
-		this.vertices.push(centerX - size);
-		this.vertices.push(centerY + size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX - size), // x
+			(centerY + size), // y
+			0.0 // z
+		);
 
 		// p2
-		this.vertices.push(centerX + size);
-		this.vertices.push(centerY + size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX + size), // x
+			(centerY + size), // y
+			0.0 // z
+		);
 
 		/*TRIANGLE 2*/
 		// p2
-		this.vertices.push(centerX + size);
-		this.vertices.push(centerY + size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX + size), // x
+			(centerY + size), // y
+			0.0 // z
+		);
 
 		// p3
-		this.vertices.push(centerX + size);
-		this.vertices.push(centerY - size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX + size), // x
+			(centerY - size), // y
+			0.0 // z
+		);
 
 		// p0
-		this.vertices.push(centerX - size);
-		this.vertices.push(centerY - size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX - size), // x
+			(centerY - size), // y
+			0.0 // z
+		);
 	}// End generateSquareVertices
 }// End class Square
