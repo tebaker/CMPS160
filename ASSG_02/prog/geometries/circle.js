@@ -21,7 +21,7 @@ class Circle extends Geometry {
 		super.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
 		this.segments = segVal;
-		super.vertices = [];
+		super.vertices = new Vertex();
 
 		this.generateCircleVertices(sizeVal, segVal, centerX, centerY);
 	}
@@ -52,23 +52,29 @@ class Circle extends Geometry {
 
 		for (let i = 0; i < segments; i++) {
 			// p0
-			this.vertices.push(centerX);
-			this.vertices.push(centerY);
-			this.vertices.push(0.0);
+			this.vertices.addPoints(
+				centerX, // x
+				centerY, // y
+				0.0 // z
+			);
 
 			// p1
-			this.vertices.push(centerX + holdVertexX);
-			this.vertices.push(centerY + holdVertexY);
-			this.vertices.push(0.0);
+			this.vertices.addPoints(
+				(centerX + holdVertexX), // x
+				(centerY + holdVertexY), // y
+				0.0 // z
+			);
 
 		    angle = i * 2 * Math.PI / segments
 		    let nextVertexX = radius * Math.cos(angle)
 		    let nextVertexY = radius * Math.sin(angle)
 
 		    // p2
-		    this.vertices.push(centerX + nextVertexX);
-			this.vertices.push(centerY + nextVertexY);
-			this.vertices.push(0.0);
+		    this.vertices.addPoints(
+				(centerX + nextVertexX), // x
+				(centerY + nextVertexY), // y
+				0.0 // z
+			);
 
 			holdVertexX = nextVertexX;
 			holdVertexY = nextVertexY;
@@ -76,23 +82,29 @@ class Circle extends Geometry {
 
 		// Defining one last set of points to close the circle off
 		// p0
-		this.vertices.push(centerX);
-		this.vertices.push(centerY);
-		this.vertices.push(0.0);
+			this.vertices.addPoints(
+				centerX, // x
+				centerY, // y
+				0.0 // z
+			);
 
 		// p1
-		this.vertices.push(centerX + holdVertexX);
-		this.vertices.push(centerY + holdVertexY);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX + holdVertexX), // x
+			(centerY + holdVertexY), // y
+			0.0 // z
+		);
 
 	    angle = segments * 2 * Math.PI / segments
 	    let nextVertexX = radius * Math.cos(angle)
 	    let nextVertexY = radius * Math.sin(angle)
 
 	    // p2
-	    this.vertices.push(centerX + nextVertexX);
-		this.vertices.push(centerY + nextVertexY);
-		this.vertices.push(0.0);
+	    this.vertices.addPoints(
+			(centerX + nextVertexX), // x
+			(centerY + nextVertexY), // y
+			0.0 // z
+		);
 
 
 	}// End generateCircleVertices

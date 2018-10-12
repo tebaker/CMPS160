@@ -19,7 +19,7 @@ class Triangle extends Geometry {
 		super.centerPoint = {x: centerX, y: centerY};
 		super.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
-		super.vertices = [];
+		super.vertices = new Vertex();
 
 		this.generateTriangleVertices(sizeVal, centerX, centerY)
 
@@ -45,19 +45,25 @@ class Triangle extends Geometry {
 
 		/*TRIANGLE 1*/
 		// p0
-		this.vertices.push(centerX - size);
-		this.vertices.push(centerY - size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX - size), // x
+			(centerY - size), // y
+			0.0 // z
+		);
 		
 		// p1
-		this.vertices.push(centerX);
-		this.vertices.push(centerY + size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			centerX, // x
+			(centerY + size), // y
+			0.0 // z
+		);
 
 		// p2
-		this.vertices.push(centerX + size);
-		this.vertices.push(centerY - size);
-		this.vertices.push(0.0);
+		this.vertices.addPoints(
+			(centerX + size), // x
+			(centerY - size), // y
+			0.0 // z
+		);
 
 	}// End generateTriangleVertices
 }// End class Triangle
