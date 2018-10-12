@@ -29,7 +29,7 @@ function click(ev) {
 		break;
 
 	case "triangle":
-
+		createTriangle(xCoord, yCoord, rColor, gColor, bColor, size);
 		break;
 
 	case "circle":

@@ -25,7 +25,7 @@ class Geometry {
 		sendUniformVec4ToGLSL(gl, [this.color.r, this.color.g, this.color.b, 1.0], u_FragColor);
 
 		let renderVertices = new Float32Array(this.vertices);
-		let n = this.vertices.length / 2;
+		let n = this.vertices.length / 3;
 
 		let vertexBuffer = gl.createBuffer();
 		if(!vertexBuffer) {
@@ -36,10 +36,10 @@ class Geometry {
 
 		gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
 
-		gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
 
 		gl.enableVertexAttribArray(a_Position);
 
-		gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
+		gl.drawArrays(gl.TRIANGLES, 0, n);
 	}
 }

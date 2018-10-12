@@ -48,26 +48,32 @@ class Square extends Geometry {
 		// p0
 		this.vertices.push(centerX - size);
 		this.vertices.push(centerY - size);
-
+		this.vertices.push(0.0);
+		
 		// p1
 		this.vertices.push(centerX - size);
 		this.vertices.push(centerY + size);
+		this.vertices.push(0.0);
 
 		// p2
 		this.vertices.push(centerX + size);
 		this.vertices.push(centerY + size);
+		this.vertices.push(0.0);
 
 		/*TRIANGLE 2*/
 		// p2
 		this.vertices.push(centerX + size);
 		this.vertices.push(centerY + size);
+		this.vertices.push(0.0);
 
 		// p3
 		this.vertices.push(centerX + size);
 		this.vertices.push(centerY - size);
+		this.vertices.push(0.0);
 
 		// p0
 		this.vertices.push(centerX - size);
 		this.vertices.push(centerY - size);
+		this.vertices.push(0.0);
 	}// End generateSquareVertices
 }// End class Square

@@ -5,46 +5,59 @@
 * @this {Triangle}
 */
 class Triangle extends Geometry {
-    /**
-    * Constructor for Triangle.
-    *
-    * @constructor
-    * @param {Number} size The size of the triangle drawn
-    * @param {Number} centerX The center x-position of the triangle
-    * @param {Number} centerY The center y-position of the triangle
-    */
-    constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-        super.shape = "triangle";
-        super.centerPoint = {x: centerX, y: centerY};
-        super.color = {r: rVal, g: gVal, b: bVal};
-        super.size = sizeVal;
+	/**
+	* Constructor for Triangle.
+	*
+	* @constructor
+	* @param {Number} size The size of the triangle drawn
+	* @param {Number} centerX The center x-position of the triangle
+	* @param {Number} centerY The center y-position of the triangle
+	*/
+	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
+		super();
+		super.shape = "square";
+		super.centerPoint = {x: centerX, y: centerY};
+		super.color = {r: rVal, g: gVal, b: bVal};
+		super.size = sizeVal;
+		super.vertices = [];
 
-        generateTriangleVertices(size, centerX, centerY)
+		this.generateTriangleVertices(sizeVal, centerX, centerY)
 
-    }
+	}
 
-    /**
-    * Generates the vertices of the Triangle.
-    *
-    * @private
-    * @param {Number} size The size of the triangle drawn
-    * @param {Number} centerX The center x-position of the triangle
-    * @param {Number} centerY The center y-position of the triangle
-    */
-    generateTriangleVertices(size, centerX, centerY) {
-        // Pushing point 1
-        super.vertices.push(centerX -= size);
-        super.vertices.push(centerY -= size);
-        super.vertices.push(0.0);
+	/**
+	* Generates the vertices of the Triangle.
+	*
+	* @private
+	* @param {Number} size The size of the triangle drawn
+	* @param {Number} centerX The center x-position of the triangle
+	* @param {Number} centerY The center y-position of the triangle
+	*/
+	generateTriangleVertices(size, centerX, centerY) {
+		/*
+			   p1*
+			    / \
+			   /   \
+			p0*-----*p2
 
-        // Pushing point 2
-        super.vertices.push(centerX);
-        super.vertices.push(centerY += size);
-        super.vertices.push(0.0);
+			First triangle: p0, p1, p2
+		*/
 
-        // Pushing point 3
-        super.vertices.push(centerX += size);
-        super.vertices.push(centerY -= size);
-        super.vertices.push(0.0);
-    }
-}
+		/*TRIANGLE 1*/
+		// p0
+		this.vertices.push(centerX - size);
+		this.vertices.push(centerY - size);
+		this.vertices.push(0.0);
+		
+		// p1
+		this.vertices.push(centerX);
+		this.vertices.push(centerY + size);
+		this.vertices.push(0.0);
+
+		// p2
+		this.vertices.push(centerX + size);
+		this.vertices.push(centerY - size);
+		this.vertices.push(0.0);
+
+	}// End generateTriangleVertices
+}// End class Triangle
