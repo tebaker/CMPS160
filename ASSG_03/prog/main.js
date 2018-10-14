@@ -64,4 +64,10 @@ function main() {
 			shapeFlag = "circle";
 		}
 	);
+
+	document.getElementById("cubesButton").addEventListener("click",
+		function myFunction() {
+			shapeFlag = "cube";
+		}
+	);
 }// End main

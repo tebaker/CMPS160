@@ -39,6 +39,10 @@ function click(ev) {
 		scene.addGeometry(newCircle);
 		break;
 
+	case "cube":
+
+		break;
+
 	default:
 		console.log("Default case reached. Undefined shape");
 	}

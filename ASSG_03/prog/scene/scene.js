@@ -32,6 +32,17 @@ class Scene {
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 	}
+	
+   /**
+   * Responsible for updating the geometry's modelMatrix for animation.
+   * Does nothing for non-animating geometry.
+   */
+	updateAnimation() {
+		return;
+
+		// NOTE: This is just in place so you'll be able to call updateAnimation()
+		// on geometry that don't animate. No need to change anything.
+	}
 
 	/**
 	* Renders all the Geometry within the scene.
