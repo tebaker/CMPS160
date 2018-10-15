@@ -17,13 +17,17 @@ class RandomCircle extends Circle {
 	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal) {
 		super(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal);
 
+		super.shape = "randomCricle";
+
 		// Random direction the shape will initially move
-		this.direction = Math.random();
+		// this.direction = Math.random();
 		this.Tx, this.Ty, this.tZ = 0.0;
 	}
 
 	updateAnimation() {
 		Tx += 0.01;
 		Ty += 0.01;
+		console.log("Tx: " + Tx + " Ty: " + Ty + " Tz: " + Tz);
+		sendUniformVec4ToGLSL(u_Translation, [Tx, Ty, Tz, 0.0]);
 	}
 }// End class RandomCircle

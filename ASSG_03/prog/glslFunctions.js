@@ -13,7 +13,8 @@ function sendAttributeBufferToGLSL(data, dataCount, attribName) {
 	}
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
-	gl.bufferData(gl.ARRAY_BUFFER, attribName, gl.STATIC_DRAW);
+	// gl.bufferData(gl.ARRAY_BUFFER, attribName, gl.STATIC_DRAW);
+	gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
 	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
 

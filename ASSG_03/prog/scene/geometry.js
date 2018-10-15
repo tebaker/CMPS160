@@ -23,19 +23,11 @@ class Geometry {
 	* Renders this Geometry within your webGL scene.
 	*/
 	render() {
-
 		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
-
-		// console.log("Tx: " + Tx + " Ty: " + Ty + " Tz: " + Tz);
-
-		// sendUniformVec4ToGLSL(u_Translation, [Tx, Ty, Tz, 0.0]);
 
 		let renderVertices = new Float32Array(this.vertices.getArray());
 		let n = this.vertices.getLength() / 3;
 
-
-		sendAttributeBufferToGLSL(this.vertices, n, renderVertices);
-
-		
+		sendAttributeBufferToGLSL(renderVertices, n, this.vertices);
 	}
 }

@@ -38,10 +38,10 @@ class Scene {
    * Does nothing for non-animating geometry.
    */
 	updateAnimation() {
-		return;
-
-		// NOTE: This is just in place so you'll be able to call updateAnimation()
-		// on geometry that don't animate. No need to change anything.
+		for(let i = 0; i < this.geometries.length; ++i) {
+			console.log(this.geometries);
+			// this.geometries[i].updateAnimation();
+		}
 	}
 
 	/**

@@ -1,7 +1,10 @@
 /**
  * Responsible for animating the Scene.
  */
-function tick() {
+let tick = function() {
+	// Updating every geometry animation
+	scene.updateAnimation();
 	
-	// requestAnimationFrame(tick());
+	// Looping on tick for animation
+	requestAnimationFrame(tick);
 }

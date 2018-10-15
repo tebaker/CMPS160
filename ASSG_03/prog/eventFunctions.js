@@ -35,7 +35,7 @@ function click(ev) {
 		break;
 
 	case "circle":
-		let newCircle = new Circle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
+		let newCircle = new RandomCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
 		scene.addGeometry(newCircle);
 		break;
 
