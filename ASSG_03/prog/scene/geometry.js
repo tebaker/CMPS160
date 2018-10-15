@@ -7,10 +7,15 @@
 class Geometry {
 
 	constructor() {
+		// Shape name. TBD in child class
 		this.shape = "";
-		this.centerPoint = {x: 0.0, y: 0.0}; // Vertex objects. Each vertex has x-y-z
-		this.color = {r: 0.0, g: 0.0, b: 0.0};  // The color of your geometric object
-		this.size = 0.0; // Size length or radius of object
+		// Clicked x, y coords
+		this.centerPoint = {x: 0.0, y: 0.0};
+		// Color
+		this.color = {r: 0.0, g: 0.0, b: 0.0};
+		// Normally the length of the side/radius
+		this.size = 0.0;
+		// Holding all vertices to make up the shape
 		this.vertices;
 	}
 
@@ -19,9 +24,11 @@ class Geometry {
 	*/
 	render() {
 
+		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
 
+		// console.log("Tx: " + Tx + " Ty: " + Ty + " Tz: " + Tz);
 
-		sendUniformVec4ToGLSL(gl, [this.color.r, this.color.g, this.color.b, 1.0], u_FragColor);
+		// sendUniformVec4ToGLSL(u_Translation, [Tx, Ty, Tz, 0.0]);
 
 		let renderVertices = new Float32Array(this.vertices.getArray());
 		let n = this.vertices.getLength() / 3;

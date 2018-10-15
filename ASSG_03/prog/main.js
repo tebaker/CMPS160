@@ -1,11 +1,19 @@
 // Global declerations
 let shapeFlag = "square"; // Default shape is square
+let wireFrameFlag = false; // Default is no wireframe
 
 // All the event handlers
-let canvas, gl, a_Position, a_PointSize, u_FragColor;
+let canvas, gl;
+let a_Position, a_PointSize;
+let u_FragColor, u_Translation;
 
-// Clicked points geometry array
+let Tx = 0.5, Ty = 0.5, Tz = 0.0;
+
+// Holds every geometry in the scene
 let scene;
+
+// Math
+let mathPi = Math.PI;
 
 /**
  * Function called when the webpage loads.
@@ -41,9 +49,26 @@ function main() {
 		}
 	};
 
+	tick();
+
 	document.getElementById("clearButton").addEventListener("click",
 		function myFunction() {
 			clearCanvas(gl);
+		}
+	);
+
+	document.getElementById("wireFrameButton").addEventListener("click",
+		function myFunction() {
+			if(wireFrameFlag == false) {
+				wireFrameFlag = true;
+				sendTextToHTML("Drawing Mode (Wireframe ON):", "wireframeText");
+			}
+			else if(wireFrameFlag == true) {
+				wireFrameFlag = false;
+				sendTextToHTML("Drawing Mode (Wireframe OFF):", "wireframeText");
+			}
+			// Rerendering to update selection
+			render();
 		}
 	);
 

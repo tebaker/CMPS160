@@ -28,7 +28,12 @@ function sendAttributeBufferToGLSL(data, dataCount, attribName) {
  * @param {Integer} pointCount The amount of vertices being drawn from the buffer.
  */
 function tellGLSLToDrawCurrentBuffer(dataCount) {
-	gl.drawArrays(gl.TRIANGLES, 0, dataCount);
+	if(wireFrameFlag) {
+		gl.drawArrays(gl.LINE_STRIP, 0, dataCount);
+	}
+	else {
+		gl.drawArrays(gl.TRIANGLES, 0, dataCount);
+	}
 }
 
 /**
@@ -50,7 +55,6 @@ function sendUniformFloatToGLSL(gl, val, uniformName) {
  * @param {Array} val Array (vector) being passed to uniform variable
  * @param {String} uniformName The name of the uniform variable
  */
-function sendUniformVec4ToGLSL(gl, val, uniformName) {
-    // Pass color uniform to fragment shader
+function sendUniformVec4ToGLSL(uniformName, val) {
     gl.uniform4f(uniformName, val[0], val[1], val[2], val[3]);
 }

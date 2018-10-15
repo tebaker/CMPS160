@@ -16,6 +16,11 @@
 		<script src = "prog/glslFunctions.js"></script>
 		<script src = "prog/htmlFunctions.js"></script>
 
+		<!-- Include time and animation functions -->
+		<script src = "prog/tick.js"></script>
+
+
+
 		<!-- Include scene objects -->
 		<script src = "prog/scene/scene.js"></script>
 		<script src = "prog/scene/vertex.js"></script>
@@ -43,11 +48,14 @@
 
 		<button id="clearButton">Clear Canvas</button>
 
-		<p>Drawing Mode:</p>
-		<button id="squaresButton">Squares</button>
-		<button id="trianglesButton">Triangles</button>
-		<button id="circlesButton">Circles</button>
-		<button id="cubesButton">Cubes</button>
+		<p id="wireframeText">Drawing Mode (Wireframe OFF):</p>
+		<button id="wireFrameButton">Toggle Wireframe</button>
+
+		<p>Shapes:</p>
+		<button id="squaresButton">Square(Spin)</button>
+		<button id="trianglesButton">Triangle(Fluctuate)</button>
+		<button id="circlesButton">Circle(Wander)</button>
+		<button id="cubesButton">Cubes(Rotate)</button>
 
 		<p> Shape Color </p>
 		<label for="redSlider">Red</label>

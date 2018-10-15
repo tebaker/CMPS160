@@ -62,24 +62,9 @@ function clearCanvas(gl) {
 	scene.clearGeometry();
 }
 
-// function createSquare(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-// 	let newSquare = new Square(centerX, centerY, rVal, gVal, bVal, sizeVal);
-// 	scene.addGeometry(newSquare);
-// }
-
-// function createTriangle(centerX, centerY, rVal, gVal, bVal, sizeVal) {
-// 	let newTriangle = new Triangle(centerX, centerY, rVal, gVal, bVal, sizeVal);
-// 	scene.addGeometry(newTriangle);
-// }
-
-// function createCircle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount) {
-// 	let newCircle = new Circle(centerX, centerY, rVal, gVal, bVal, sizeVal, segCount);
-// 	scene.addGeometry(newCircle);
-// }
-
 // Definind all the event handlers. Global declerations in main
 function initEventHandelers() {
-	scene = new Scene()
+	scene = new Scene();
 
 	// Retrieve <canvas> element
 	canvas = document.getElementById('webgl');
@@ -107,6 +92,11 @@ function initEventHandelers() {
 		console.log('Fail to get the storage location of a_Position');
 		return;
 	} 
+
+	let u_Translation = gl.getUniformLocation(gl.program, 'u_Translation');
+	if(!u_Translation) {
+		console.log("Failed to get u_Translation variable");
+	}
 
 	// // Get the location of attribute variable of a_PointSize
 	// a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
