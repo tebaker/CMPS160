@@ -20,9 +20,6 @@ class SpinningSquare extends Square {
 
 		this.modelMatrix = new Matrix4();
 
-		//	Current direction the shape is traveling in
-		// this.currentAngle = Math.floor(Math.random() * 360) + 1  ;
-
 		// Translation directions
 		this.currentAngle = 0.0;
 	}
@@ -30,7 +27,7 @@ class SpinningSquare extends Square {
 	// will update model direction and travel location
 	updateAnimation() {
 
-		this.currentAngle += 0.5;
+		this.currentAngle += 1;
 
 		// console.log(this.varTx);
 

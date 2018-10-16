@@ -30,7 +30,7 @@ function click(ev) {
 		break;
 
 	case "triangle":
-		let newTriangle = new Triangle(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newTriangle = new FluctuatingTriangle(xCoord, yCoord, rColor, gColor, bColor, size);
 		scene.addGeometry(newTriangle);
 		break;
 
