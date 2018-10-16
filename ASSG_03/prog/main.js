@@ -90,9 +90,15 @@ function main() {
 		}
 	);
 
-	document.getElementById("cubesButton").addEventListener("click",
+	document.getElementById("cubesButtonON").addEventListener("click",
 		function myFunction() {
-			shapeFlag = "cube";
+			shapeFlag = "cubeON";
+		}
+	);
+
+	document.getElementById("cubesButtonOFF").addEventListener("click",
+		function myFunction() {
+			shapeFlag = "cubeOFF";
 		}
 	);
 }// End main

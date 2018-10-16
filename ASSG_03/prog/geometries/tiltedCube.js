@@ -21,6 +21,8 @@ class TiltedCube extends Geometry {
 		super.size = sizeVal;
 		super.vertices = new Vertex();
 
+		super.wireframe = true;
+
 		this.generateTiltedCubeVertices(centerX, centerY, sizeVal);
 	}
 
@@ -34,58 +36,74 @@ class TiltedCube extends Geometry {
 	*/
 	generateTiltedCubeVertices(centerX, centerY, size) {
 		/*
-			p1*-----*p2   *p2
-			  |   /     / |
-			  | /     /   |
-			p0*   p0*-----*p3
+			Cube faces will be repeated 4 times for the sides
+			and 2 more times for the top and bottom.
+
+			Faces:
+
+			p1*-----*p2   *p2  p2*   p2*-----*p5
+			  |   /     / |      | \     \   |
+			  | /     /   |      |   \     \ |
+			p0*   p0*-----*p3  p3*-----*p4   *p4
 
 			First triangle: p0, p1, p2
 
 			Second triangle: p2, p3, p0
 		*/
 
-		/*TRIANGLE 1*/
-		// p0
-		this.vertices.addPoints(
-			(centerX - size), // x
-			(centerY - size), // y
-			0.0 // z
-		);
-		
-		// p1
-		this.vertices.addPoints(
-			(centerX - size), // x
-			(centerY + size), // y
-			0.0 // z
-		);
+		// First two points (faces will start and end with these points)
+		let p0x = centerX - size;
+		let p0y = centerY - size;
+		let p0z = 0.0;
 
-		// p2
-		this.vertices.addPoints(
-			(centerX + size), // x
-			(centerY + size), // y
-			0.0 // z
-		);
+		let p1x = centerX - size;
+		let p1y = centerY + size;
+		let p1z = 0.0;
 
-		/*TRIANGLE 2*/
-		// p2
-		this.vertices.addPoints(
-			(centerX + size), // x
-			(centerY + size), // y
-			0.0 // z
-		);
+		for(let i = 0; i < 4; ++i) {
+			/*TRIANGLE 1*/
+			// p0
+			this.vertices.addPoints(
+				(centerX - size), // x
+				(centerY - size), // y
+				0.0 // z
+			);
+			
+			// p1
+			this.vertices.addPoints(
+				(centerX - size), // x
+				(centerY + size), // y
+				0.0 // z
+			);
 
-		// p3
-		this.vertices.addPoints(
-			(centerX + size), // x
-			(centerY - size), // y
-			0.0 // z
-		);
+			// p2
+			this.vertices.addPoints(
+				(centerX + size), // x
+				(centerY + size), // y
+				0.0 // z
+			);
 
-		// p0
-		this.vertices.addPoints(
-			(centerX - size), // x
-			(centerY - size), // y
-			0.0 // z
-		);
+			/*TRIANGLE 2*/
+			// p2
+			this.vertices.addPoints(
+				(centerX + size), // x
+				(centerY + size), // y
+				0.0 // z
+			);
+
+			// p3
+			this.vertices.addPoints(
+				(centerX + size), // x
+				(centerY - size), // y
+				0.0 // z
+			);
+
+			// p0
+			this.vertices.addPoints(
+				(centerX - size), // x
+				(centerY - size), // y
+				0.0 // z
+			);
+		}
 	}// End generateTiltedCubeVertices
 }// End class TiltedCube

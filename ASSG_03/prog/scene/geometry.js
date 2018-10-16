@@ -17,6 +17,8 @@ class Geometry {
 		this.size = 0.0;
 		// Holding all vertices to make up the shape
 		this.vertices;
+		// Holding toggle for wireframe option
+		this.wireframe = false;
 	}
 
 	/**
