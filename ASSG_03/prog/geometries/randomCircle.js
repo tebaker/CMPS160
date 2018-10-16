@@ -19,15 +19,49 @@ class RandomCircle extends Circle {
 
 		super.shape = "randomCricle";
 
-		// Random direction the shape will initially move
-		// this.direction = Math.random();
-		this.Tx, this.Ty, this.tZ = 0.0;
+		this.modelMatrix = new Matrix4();
+
+		//	Current direction the shape is traveling in
+		this.currentAngle = Math.floor(Math.random() * 360) + 1  ;
+
+		// Translation directions
+		this.varTx = 0.0;
+
+		this.flag = false;
 	}
 
+	// will update model direction and travel location
 	updateAnimation() {
-		Tx += 0.01;
-		Ty += 0.01;
-		console.log("Tx: " + Tx + " Ty: " + Ty + " Tz: " + Tz);
-		sendUniformVec4ToGLSL(u_Translation, [Tx, Ty, Tz, 0.0]);
+
+		this.currentAngle += 0.5;
+
+		this.varTx += Math.sin(this.currentAngle) / 100;
+
+		console.log(this.varTx);
+
+		this.modelMatrix.setRotate(this.currentAngle, 0, 0, 1);
+		
+		this.modelMatrix.translate(this.varTx, 0, 0);
+
+		// Pass the rotation matrix to the vertex shader
+		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
+
+		this.render();
+
+	}
+
+	/**
+	* Overloaded base class renders in order to update animaton / movement
+	*/
+	render() {
+		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
+
+		let renderVertices = new Float32Array(this.vertices.getArray());
+		let n = this.vertices.getLength() / 3;
+
+		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+
+		// Render Vertices = Float32Array.
+		sendAttributeBufferToGLSL(renderVertices, n);
 	}
 }// End class RandomCircle

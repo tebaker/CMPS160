@@ -32,6 +32,14 @@ class Scene {
 		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 	}
+
+	// Popping out-of-bounds shape from scene to save frames
+	popShape(thisShape) {
+		let index = geometries.indexOf(thisShape);
+		if(index > -1) {
+			geometries.splice(index, 1);
+		}
+	}
 	
    /**
    * Responsible for updating the geometry's modelMatrix for animation.
@@ -39,9 +47,14 @@ class Scene {
    */
 	updateAnimation() {
 		for(let i = 0; i < this.geometries.length; ++i) {
-			console.log(this.geometries);
-			// this.geometries[i].updateAnimation();
+			// console.log(this.geometries);
+			this.geometries[i].updateAnimation();
 		}
+
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
+		scene.render();
 	}
 
 	/**

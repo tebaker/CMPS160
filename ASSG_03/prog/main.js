@@ -4,10 +4,8 @@ let wireFrameFlag = false; // Default is no wireframe
 
 // All the event handlers
 let canvas, gl;
-let a_Position, a_PointSize;
-let u_FragColor, u_Translation;
-
-let Tx = 0.5, Ty = 0.5, Tz = 0.0;
+let a_Position/*, a_PointSize*/;
+let u_FragColor, u_ModelMatrix;
 
 // Holds every geometry in the scene
 let scene;
@@ -31,6 +29,7 @@ function main() {
 
 	// Function for when the mouse is pressed
 	canvas.onmousedown = function(ev) {
+		// console.log("But I need to poop too!");
 		isMouseDown = true
 		click(ev);
 		render();
@@ -44,6 +43,7 @@ function main() {
 	// Check for if mouse is being dragged
 	canvas.onmousemove = function(ev) {
 		if(isMouseDown) {
+			// console.log("I'm in here! Close the door!");
 			click(ev);
 			render();
 		}

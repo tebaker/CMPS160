@@ -17,7 +17,7 @@ class Circle extends Geometry {
 	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal, shapeName) {
 		super();
 		super.shape = "circle";
-		super.centerPfoint = {x: centerX, y: centerY};
+		super.centerPoint = {x: centerX, y: centerY};
 		super.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
 		this.segments = segVal;

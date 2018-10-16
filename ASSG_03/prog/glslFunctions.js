@@ -4,9 +4,8 @@
  * @private
  * @param {Float32Array} data Data being sent to attribute variable
  * @param {Number} dataCount The amount of data to pass per vertex
- * @param {String} attribName The name of the attribute variable
  */
-function sendAttributeBufferToGLSL(data, dataCount, attribName) {
+function sendAttributeBufferToGLSL(data, dataCount) {
 	let vertexBuffer = gl.createBuffer();
 	if(!vertexBuffer) {
 		console.log("Vertex buffer failed to create");
@@ -19,7 +18,7 @@ function sendAttributeBufferToGLSL(data, dataCount, attribName) {
 	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
 
 	gl.enableVertexAttribArray(a_Position);
-
+	
 	tellGLSLToDrawCurrentBuffer(dataCount);
 }
 
@@ -58,4 +57,8 @@ function sendUniformFloatToGLSL(gl, val, uniformName) {
  */
 function sendUniformVec4ToGLSL(uniformName, val) {
     gl.uniform4f(uniformName, val[0], val[1], val[2], val[3]);
+}
+
+function sendUniformMat4ToGLSL(uniformName, matElements) {
+    gl.uniformMatrix4fv(uniformName, false, matElements);
 }

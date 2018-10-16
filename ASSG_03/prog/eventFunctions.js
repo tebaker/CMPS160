@@ -93,17 +93,18 @@ function initEventHandelers() {
 		return;
 	} 
 
-	let u_Translation = gl.getUniformLocation(gl.program, 'u_Translation');
-	if(!u_Translation) {
-		console.log("Failed to get u_Translation variable");
+	u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+	if (!u_ModelMatrix) { 
+		console.log('Failed to get the storage location of u_ModelMatrix');
+		return;
 	}
 
-	// // Get the location of attribute variable of a_PointSize
-	// a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
-	// if (a_PointSize < 0) {
-	// 	console.log('Fail to get the storage location of a_PointSize');
-	// 	return;
-	// }
+	/*// Get the location of attribute variable of a_PointSize
+	a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
+	if (a_PointSize < 0) {
+		console.log('Fail to get the storage location of a_PointSize');
+		return;
+	}*/
 
 	u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
 	if(!u_FragColor) {
