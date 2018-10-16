@@ -34,12 +34,12 @@ class Scene {
 	}
 
 	// Popping out-of-bounds shape from scene to save frames
-	popShape(thisShape) {
-		let index = geometries.indexOf(thisShape);
-		if(index > -1) {
-			geometries.splice(index, 1);
-		}
-	}
+	// popShape(thisShape) {
+	// 	let index = geometries.indexOf(thisShape);
+	// 	if(index > -1) {
+	// 		geometries.splice(index, 1);
+	// 	}
+	// }
 	
    /**
    * Responsible for updating the geometry's modelMatrix for animation.

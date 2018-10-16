@@ -26,8 +26,6 @@ class RandomCircle extends Circle {
 
 		// Translation directions
 		this.varTx = 0.0;
-
-		this.flag = false;
 	}
 
 	// will update model direction and travel location
@@ -37,7 +35,7 @@ class RandomCircle extends Circle {
 
 		this.varTx += Math.sin(this.currentAngle) / 100;
 
-		console.log(this.varTx);
+		// console.log(this.varTx);
 
 		this.modelMatrix.setRotate(this.currentAngle, 0, 0, 1);
 		

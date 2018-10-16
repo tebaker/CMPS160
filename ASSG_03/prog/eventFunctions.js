@@ -25,7 +25,7 @@ function click(ev) {
 
 	switch(shapeFlag) {
 	case "square":
-		let newSquare = new Square(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size);
 		scene.addGeometry(newSquare);
 		break;
 
