@@ -23,6 +23,8 @@ function click(ev) {
 	// console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
 	// console.log("size: " + size + " segCount: " + segCount);
 
+	console.log(shapeFlag);
+
 	switch(shapeFlag) {
 	case "square":
 		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size);
@@ -40,7 +42,8 @@ function click(ev) {
 		break;
 
 	case "cube":
-
+		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size);
+		scene.addGeometry(newCube);
 		break;
 
 	default:

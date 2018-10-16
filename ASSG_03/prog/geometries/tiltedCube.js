@@ -24,6 +24,42 @@ class TiltedCube extends Geometry {
 		super.wireframe = true;
 
 		this.generateTiltedCubeVertices(centerX, centerY, sizeVal);
+
+		this.modelMatrix = new Matrix4();
+
+		// Translation directions
+		this.currentAngle = 0.0;
+	}
+
+	// will update model direction and travel location
+	updateAnimation() {
+
+		this.currentAngle += 1;
+
+		// console.log(this.varTx);
+
+		this.modelMatrix.setRotate(this.currentAngle, this.currentAngle, this.currentAngle, 1);
+
+		// Pass the rotation matrix to the vertex shader
+		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
+
+		this.render();
+
+	}
+
+	/**
+	* Overloaded base class renders in order to update animaton / movement
+	*/
+	render() {
+		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
+
+		let renderVertices = new Float32Array(this.vertices.getArray());
+		let n = this.vertices.getLength() / 3;
+
+		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+
+		// Render Vertices = Float32Array.
+		sendAttributeBufferToGLSL(renderVertices, n);
 	}
 
 	/**
@@ -41,69 +77,249 @@ class TiltedCube extends Geometry {
 
 			Faces:
 
-			p1*-----*p2   *p2  p2*   p2*-----*p5
-			  |   /     / |      | \     \   |
-			  | /     /   |      |   \     \ |
-			p0*   p0*-----*p3  p3*-----*p4   *p4
+			p1*-----*p2   *p2
+			  |   /     / |
+			  | /     /   |
+			p0*   p0*-----*p3
 
 			First triangle: p0, p1, p2
 
 			Second triangle: p2, p3, p0
 		*/
 
-		// First two points (faces will start and end with these points)
-		let p0x = centerX - size;
-		let p0y = centerY - size;
-		let p0z = 0.0;
-
-		let p1x = centerX - size;
-		let p1y = centerY + size;
-		let p1z = 0.0;
-
-		for(let i = 0; i < 4; ++i) {
-			/*TRIANGLE 1*/
-			// p0
-			this.vertices.addPoints(
-				(centerX - size), // x
-				(centerY - size), // y
-				0.0 // z
-			);
-			
-			// p1
-			this.vertices.addPoints(
-				(centerX - size), // x
-				(centerY + size), // y
-				0.0 // z
-			);
-
-			// p2
-			this.vertices.addPoints(
-				(centerX + size), // x
-				(centerY + size), // y
-				0.0 // z
-			);
-
-			/*TRIANGLE 2*/
-			// p2
-			this.vertices.addPoints(
-				(centerX + size), // x
-				(centerY + size), // y
-				0.0 // z
-			);
-
-			// p3
-			this.vertices.addPoints(
-				(centerX + size), // x
-				(centerY - size), // y
-				0.0 // z
-			);
-
-			// p0
-			this.vertices.addPoints(
-				(centerX - size), // x
-				(centerY - size), // y
-				0.0 // z
-			);
-		}
+		/*FRONT SQUARE*/
+			/*012*/
+				// p0
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p1
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p2
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					size // z
+				);
+			/*023*/
+				// p2
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p3
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p0
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					size // z
+				);
+		/*RIGHT SQUARE*/
+			/*324*/
+				// p3
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p2
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p4
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					-size // z
+				);
+			/*345*/
+				// p3
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p4
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p5
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					-size // z
+				);
+		/*BACK SQUARE*/
+			/*546*/
+				// p5
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p4
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p6
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					-size // z
+				);
+			/*567*/
+				// p5
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p6
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p7
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					-size // z
+				);
+		/*LEFT SQUARE*/
+			/*761*/
+				// p7
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p6
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p1
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					size // z
+				);
+			/*710*/
+				// p7
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p1
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p0
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					size // z
+				);
+		/*TOP SQUARE*/
+			/*164*/
+				// p1
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p6
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p4
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					-size // z
+				);
+			/*142*/
+				// p1
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY + size), // y
+					size // z
+				);
+				// p4
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					-size // z
+				);
+				// p2
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY + size), // y
+					size // z
+				);
+		/*BOTTOM SQUARE*/
+			/*703*/
+				// p7
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p0
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p3
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					size // z
+				);
+			/*735*/
+				// p7
+				this.vertices.addPoints(
+					(centerX - size), // x
+					(centerY - size), // y
+					-size // z
+				);
+				// p3
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					size // z
+				);
+				// p5
+				this.vertices.addPoints(
+					(centerX + size), // x
+					(centerY - size), // y
+					-size // z
+				);
 	}// End generateTiltedCubeVertices
 }// End class TiltedCube

@@ -35,9 +35,11 @@ class FluctuatingTriangle extends Triangle {
 
 		this.scale += newScale;
 
-		// console.log(this.varTx);
+		this.modelMatrix.translate(-super.centerX, -super.centerY, 0);
 
 		this.modelMatrix.setScale(this.scale, this.scale, 1, 1);
+
+		this.modelMatrix.translate(super.centerX, super.centerY, 0);
 
 		// Pass the rotation matrix to the vertex shader
 		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);

@@ -13,6 +13,9 @@ let scene;
 // Math
 let mathPi = Math.PI;
 
+// Time info
+// let masterTime = performance.now();
+
 /**
  * Function called when the webpage loads.
  */
@@ -90,15 +93,9 @@ function main() {
 		}
 	);
 
-	document.getElementById("cubesButtonON").addEventListener("click",
+	document.getElementById("cubesButton").addEventListener("click",
 		function myFunction() {
-			shapeFlag = "cubeON";
-		}
-	);
-
-	document.getElementById("cubesButtonOFF").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "cubeOFF";
+			shapeFlag = "cube";
 		}
 	);
 }// End main
