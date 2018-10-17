@@ -46,6 +46,11 @@ function click(ev) {
 		scene.addGeometry(newCube);
 		break;
 
+	case "obj":
+		let newOBJ = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size);
+		scene.addGeometry(newCube);
+		break;
+
 	default:
 		console.log("Default case reached. Undefined shape");
 	}

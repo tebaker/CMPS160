@@ -62,6 +62,18 @@ function main() {
 		}
 	);
 
+	document.getElementById("fileSelection").addEventListener("click",
+		function myFunction() {
+			loadFile(file_name, load_handle);
+		}
+	);
+
+	document.getElementById("addOBJToScene").addEventListener("click",
+		function myFunction() {
+			shapeFlag = "obj";
+		}
+	);
+
 	document.getElementById("wireFrameButton").addEventListener("click",
 		function myFunction() {
 			if(wireFrameFlag == false) {

@@ -66,7 +66,7 @@ class RandomCircle extends Circle {
 				this.varTa = 0.001;
 			}
 			else {
-				this.varTa = -0.005;
+				this.varTa = -0.001;
 			}
 
 			if(var4) {
