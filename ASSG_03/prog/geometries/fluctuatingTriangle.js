@@ -16,30 +16,56 @@ class FluctuatingTriangle extends Triangle {
 	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
 		super(centerX, centerY, rVal, gVal, bVal, sizeVal);
 		
-		super.shape = "spinningSquare";
+		this.centerX = centerX;
+		this.centerY = centerY;
+
+		super.shape = "fluctuatingTriangle";
 
 		this.modelMatrix = new Matrix4();
 
-		this.scaleAmount = 60;
+		this.scale = 1.01;
 
-		// Scale translation
-		this.scale = 1.0
+		this.growFlag = true;
 	}
 
 	// will update model direction and travel location
 	updateAnimation() {
+		let translateMatrix1 = new Matrix4();
+		let scaleMatrix = new Matrix4();
+		let translateMatrix2 = new Matrix4();
 
-		this.scaleAmount += 0.1;
+		let timeNow = performance.now();
 
-		let newScale = Math.sin(this.scaleAmount) / 60;
+		console.log(tickFlag);
 
-		this.scale += newScale;
+		//T
+		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
+			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
 
-		this.modelMatrix.translate(-super.centerX, -super.centerY, 0);
+		if(tickFlag) {
+			if(this.growFlag) {
+				this.growFlag = false;
+			}
+			else {
+				this.growFlag = true;
+			}
+		}
 
-		this.modelMatrix.setScale(this.scale, this.scale, 1, 1);
+		//S
+		if(this.growFlag) {
+			scaleMatrix.setScale(1.01, 1.01, 0);
+		}
+		else {
+			scaleMatrix.setScale(0.99, 0.99, 0);
+		}
+		
+		this.modelMatrix = scaleMatrix.multiply(this.modelMatrix);
 
-		this.modelMatrix.translate(super.centerX, super.centerY, 0);
+
+		//T
+		translateMatrix2.setTranslate(this.centerX, this.centerY, 0);
+
+			this.modelMatrix = translateMatrix2.multiply(this.modelMatrix);
 
 		// Pass the rotation matrix to the vertex shader
 		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
@@ -63,35 +89,3 @@ class FluctuatingTriangle extends Triangle {
 		sendAttributeBufferToGLSL(renderVertices, n);
 	}
 }// End class FluctuatingTriangle
-
-
-
-
-/*super(centerX, centerY, rVal, gVal, bVal, sizeVal);
-		
-		super.shape = "fluctuatingTriangle";
-
-		this.modelMatrix = new Matrix4();
-
-		// Translation directions
-		this.scaleX = 0.0;
-		this.scaleY = 0.0;
-		this.scaleZ = 0.0;
-	}
-
-	// will update model direction and travel location
-	updateAnimation() {
-
-		this.scaleX += Math.sin(Math.random()) / 100;
-		this.scaleY += Math.sin(Math.random()) / 100;
-		this.scaleZ += Math.sin(Math.random()) / 100;
-
-		// console.log(this.varTx);
-
-		this.modelMatrix.setScale(scaleX, scaleY, scaleZ);
-
-		// Pass the rotation matrix to the vertex shader
-		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
-
-		this.render();
-*/

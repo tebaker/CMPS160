@@ -14,7 +14,9 @@ let scene;
 let mathPi = Math.PI;
 
 // Time info
-// let masterTime = performance.now();
+let masterTime = performance.now();
+
+let tickFlag = false;
 
 /**
  * Function called when the webpage loads.
