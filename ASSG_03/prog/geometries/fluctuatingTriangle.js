@@ -36,12 +36,12 @@ class FluctuatingTriangle extends Triangle {
 
 		let timeNow = performance.now();
 
-		console.log(tickFlag);
-
 		//T
 		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
 			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
 
+		// Every time tickFlag is true (once every second)
+		// shrink / grow triangle
 		if(tickFlag) {
 			if(this.growFlag) {
 				this.growFlag = false;

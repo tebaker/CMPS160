@@ -38,7 +38,7 @@ class SpinningSquare extends Square {
 		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
 
 			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
-
+			
 		//R
 		rotateMatrix.setRotate(this.currentAngle, 0, 0, 1);
 

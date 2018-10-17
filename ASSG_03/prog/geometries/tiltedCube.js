@@ -21,30 +21,42 @@ class TiltedCube extends Geometry {
 		super.size = sizeVal;
 		super.vertices = new Vertex();
 
-		super.wireframe = true;
+		this.centerX = centerX;
+		this.centerY = centerY;
 
 		this.generateTiltedCubeVertices(centerX, centerY, sizeVal);
 
 		this.modelMatrix = new Matrix4();
 
 		// Translation directions
-		this.currentAngle = 0.0;
+		this.currentAngle = 1;
 	}
 
 	// will update model direction and travel location
 	updateAnimation() {
+		// console.log(this.centerX, this.centerY);
+		let translateMatrix1 = new Matrix4();
+		let rotateMatrix = new Matrix4();
+		let translateMatrix2 = new Matrix4();
 
-		this.currentAngle += 1;
+		//T
+		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
 
-		// console.log(this.varTx);
+			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
 
-		this.modelMatrix.setRotate(this.currentAngle, this.currentAngle, this.currentAngle, 1);
+		//R
+		rotateMatrix.setRotate(this.currentAngle, this.currentAngle, this.currentAngle, this.currentAngle);
+
+			this.modelMatrix = rotateMatrix.multiply(this.modelMatrix);
+
+		//T
+		translateMatrix2.setTranslate(this.centerX, this.centerY, 0);
+
+			this.modelMatrix = translateMatrix2.multiply(this.modelMatrix);
 
 		// Pass the rotation matrix to the vertex shader
 		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
-
 		this.render();
-
 	}
 
 	/**
