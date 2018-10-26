@@ -6,11 +6,7 @@
 		<script src = "lib/webgl-utils.js"></script>
 		<script src = "lib/webgl-debug.js"></script>
 		<script src = "lib/cuon-utils.js"></script>
-		<script src = "lib/load-file.js"></script>
 		<script src = "lib/cuon-matrix.js"></script>
-
-		<script src = "lib/obj_loading/loadedOBJ.js"></script>
-		<script src = "lib/obj_loading/webgl-obj-loader.js"></script>
 
 		<!-- Include main program -->
 		<script src = "prog/main.js"></script>
@@ -39,6 +35,9 @@
 		<script src = "prog/geometries/fluctuatingTriangle.js"></script>
 		<script src = "prog/geometries/tiltedCube.js"></script>
 
+		<script src = "lib/obj_loading/loadedOBJ.js"></script>
+		<script src = "lib/obj_loading/webgl-obj-loader.js"></script>
+
 		<!-- Include shaders -->
 		<script src = "prog/shaders.js"></script>
 	</head>
@@ -57,8 +56,11 @@
 		<button id="clearButton">Clear Canvas</button>
 
 		<p>Set OBJ:</p>
-		<button id="fileSelection">Choose File</button>
-		<button id="addOBJToScene">Add OBJ To Scene</button>
+		<tr>
+			<td>Select a File to Load:</td>
+			<td><input type="file" id="fileToLoad"></td>
+			<td><button id="loadFileAsText">Add OBJ To Scene</button><td>
+		</tr>
 
 		<p id="wireframeText">Drawing Mode (Wireframe OFF):</p>
 		<button id="wireFrameButton">Toggle Wireframe</button>

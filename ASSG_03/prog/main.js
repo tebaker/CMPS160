@@ -56,21 +56,30 @@ function main() {
 
 	tick();
 
+	// Loading obj file from html
+	document.getElementById("loadFileAsText").addEventListener("click",
+		function myFunction() {
+
+			let somethingElse;
+
+			var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+			var fileReader = new FileReader();
+
+			fileReader.onload = function(fileLoadedEvent){
+
+				objString = fileLoadedEvent.target.result;
+			};
+
+			fileReader.readAsText(fileToLoad, "UTF-8");
+
+			shapeFlag = "obj";
+		}
+	);
+
 	document.getElementById("clearButton").addEventListener("click",
 		function myFunction() {
 			clearCanvas(gl);
-		}
-	);
-
-	document.getElementById("fileSelection").addEventListener("click",
-		function myFunction() {
-			loadFile(file_name, load_handle);
-		}
-	);
-
-	document.getElementById("addOBJToScene").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "obj";
 		}
 	);
 
