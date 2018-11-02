@@ -7,10 +7,10 @@
 class Vertex {
 	// Default constructor
 	constructor() {
-		this.points = [];
+		this.points = []; // x, y, z coords
 		this.normal = [];
 		this.uv = [];
-		this.colors = [];
+		this.colors = []; // r, g, b values
 	}
 
 	// Adding x, y, z coords
@@ -27,7 +27,7 @@ class Vertex {
 		this.colors.push(bColor);
 	}
 
-	getArray() {
+	getArray(isSolidColor, r, g, b) {
 		let returnArray = [];
 
 		for(let i = 0; i < this.points.length; i+=3) {
@@ -36,12 +36,19 @@ class Vertex {
 			returnArray.push(this.points[i+1]);
 			returnArray.push(this.points[i+2]);
 
-			// Getting the r, g, b values of each point
-			returnArray.push(this.colors[i]);
-			returnArray.push(this.colors[i+1]);
-			returnArray.push(this.colors[i+2]);
+			if(isSolidColor) {
+				returnArray.push(r);
+				returnArray.push(g);
+				returnArray.push(b);
+			}
+			else {
+				// Getting the r, g, b values of each point
+				returnArray.push(this.colors[i]);
+				returnArray.push(this.colors[i+1]);
+				returnArray.push(this.colors[i+2]);
+			}
+			
 		}
-
 
 		return returnArray;
 	}

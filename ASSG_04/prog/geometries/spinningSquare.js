@@ -13,11 +13,14 @@ class SpinningSquare extends Square {
 	* @param {Number} centerX The center x-position of the SpinningSquare
 	* @param {Number} centerY The center y-position of the SpinningSquare
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
+	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, colorFlag) {
 		super(centerX, centerY, rVal, gVal, bVal, sizeVal);
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
+
+		this.color = {r: rVal, g: gVal, b: bVal};
+		this.isSolidColor = colorFlag;
 
 		super.shape = "spinningSquare";
 
@@ -60,7 +63,7 @@ class SpinningSquare extends Square {
 	render() {
 		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
 
-		let renderVertices = new Float32Array(this.vertices.getArray());
+		let renderVertices = new Float32Array(this.vertices.getArray(this.isSolidColor, this.color.r, this.color.g, this.color.b));
 		let n = this.vertices.getLength() / 3;
 
 		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);

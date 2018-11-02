@@ -14,13 +14,17 @@ class RandomCircle extends Circle {
 	* @param {Number} centerX The central x-position of the Randomcircle
 	* @param {Number} centerY The central y-position of the Randomcircle
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal) {
+	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal, colorFlag) {
 		super(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal);
 
 		this.centerX = centerX;
 		this.centerY = centerY;
 
+		this.color = {r: rVal, g: gVal, b: bVal};
+
 		super.shape = "randomCricle";
+
+		this.isSolidColor = colorFlag;
 
 		this.modelMatrix = new Matrix4();
 
@@ -92,7 +96,7 @@ class RandomCircle extends Circle {
 	render() {
 		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
 
-		let renderVertices = new Float32Array(this.vertices.getArray());
+		let renderVertices = new Float32Array(this.vertices.getArray(this.isSolidColor, this.color.r, this.color.g, this.color.b));
 		let n = this.vertices.getLength() / 3;
 
 		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);

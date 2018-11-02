@@ -27,27 +27,27 @@ function click(ev) {
 
 	switch(shapeFlag) {
 	case "square":
-		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
 		scene.addGeometry(newSquare);
 		break;
 
 	case "triangle":
-		let newTriangle = new FluctuatingTriangle(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newTriangle = new FluctuatingTriangle(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
 		scene.addGeometry(newTriangle);
 		break;
 
 	case "circle":
-		let newCircle = new RandomCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
+		let newCircle = new RandomCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount, solidColorFlag);
 		scene.addGeometry(newCircle);
 		break;
 
 	case "cube":
-		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size);
+		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
 		scene.addGeometry(newCube);
 		break;
 
 	case "obj":
-		let newOBJ = new LoadedOBJ(xCoord, yCoord, rColor, gColor, bColor, size, objString);
+		let newOBJ = new LoadedOBJ(xCoord, yCoord, rColor, gColor, bColor, size, objString, solidColorFlag);
 		scene.addGeometry(newOBJ);
 		break;
 
