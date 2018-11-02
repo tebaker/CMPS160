@@ -43,7 +43,7 @@ class Triangle extends Geometry {
 			First triangle: p0, p1, p2
 		*/
 
-		/*TRIANGLE 1*/
+	/*TRIANGLE 1 VERTICES*/
 		// p0
 		this.vertices.addPoints(
 			(centerX - size), // x
@@ -64,6 +64,27 @@ class Triangle extends Geometry {
 			(centerY - size), // y
 			0.0 // z
 		);
+
+	/*TRIANGLE 1 COLORS*/
+		// c0
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+
+		// c1
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+		// c2
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
 
 	}// End generateTriangleVertices
 }// End class Triangle
