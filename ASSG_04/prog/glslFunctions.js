@@ -15,9 +15,18 @@ function sendAttributeBufferToGLSL(data, dataCount) {
 	// gl.bufferData(gl.ARRAY_BUFFER, attribName, gl.STATIC_DRAW);
 	gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
-	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
+
+	// Getting the bytes per element
+	let FSIZE = data.BYTES_PER_ELEMENT;
+
+
+	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE*6, 0);
 
 	gl.enableVertexAttribArray(a_Position);
+
+	gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE*6, FSIZE*3);
+
+	gl.enableVertexAttribArray(a_Color);
 	
 	tellGLSLToDrawCurrentBuffer(dataCount);
 }

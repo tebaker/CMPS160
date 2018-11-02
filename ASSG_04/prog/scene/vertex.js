@@ -10,16 +10,40 @@ class Vertex {
 		this.points = [];
 		this.normal = [];
 		this.uv = [];
+		this.colors = [];
 	}
 
+	// Adding x, y, z coords
 	addPoints(xCoord, yCoord, zCoord) {
 		this.points.push(xCoord);
 		this.points.push(yCoord);
 		this.points.push(zCoord);
 	}
 
+	// Adding r, g, b colors
+	addColors(rColor, gColor, bColor) {
+		this.colors.push(rColor);
+		this.colors.push(gColor);
+		this.colors.push(bColor);
+	}
+
 	getArray() {
-		return this.points;
+		let returnArray = [];
+
+		for(let i = 0; i < this.points.length; i+=3) {
+			// Getting the x, y, z coords of the vector
+			returnArray.push(this.points[i]);
+			returnArray.push(this.points[i+1]);
+			returnArray.push(this.points[i+2]);
+
+			// Getting the r, g, b values of each point
+			returnArray.push(this.colors[i]);
+			returnArray.push(this.colors[i+1]);
+			returnArray.push(this.colors[i+2]);
+		}
+
+
+		return returnArray;
 	}
 
 	getLength() {

@@ -44,29 +44,46 @@ class Square extends Geometry {
 			Second triangle: p2, p3, p0
 		*/
 
-		/*TRIANGLE 1*/
+	/*TRIANGLE 1 VERTICES*/
 		// p0
 		this.vertices.addPoints(
 			(centerX - size), // x
 			(centerY - size), // y
 			0.0 // z
 		);
-		
 		// p1
 		this.vertices.addPoints(
 			(centerX - size), // x
 			(centerY + size), // y
 			0.0 // z
 		);
-
 		// p2
 		this.vertices.addPoints(
 			(centerX + size), // x
 			(centerY + size), // y
 			0.0 // z
 		);
+	/*TRIANGLE 1 COLORS*/
+		// c0
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+		// c1
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+		// c2
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
 
-		/*TRIANGLE 2*/
+	/*TRIANGLE 2 VERTICES*/
 		// p2
 		this.vertices.addPoints(
 			(centerX + size), // x
@@ -87,5 +104,24 @@ class Square extends Geometry {
 			(centerY - size), // y
 			0.0 // z
 		);
+	/*TRIANGLE 2 COLORS*/
+		// c0
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+		// c1
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
+		// c2
+		this.vertices.addColors(
+			Math.random(),
+			Math.random(),
+			Math.random()
+		)
 	}// End generateSquareVertices
 }// End class Square

@@ -107,16 +107,16 @@ function initEventHandelers() {
 		return;
 	}
 
-	/*// Get the location of attribute variable of a_PointSize
-	a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
-	if (a_PointSize < 0) {
-		console.log('Fail to get the storage location of a_PointSize');
+	// Get the location of attribute variable of a_PointSize
+	a_Color = gl.getAttribLocation(gl.program, 'a_Color');
+	if (a_Color < 0) {
+		console.log('Fail to get the storage location of a_Color');
 		return;
-	}*/
+	}
 
-	u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
+	/*u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
 	if(!u_FragColor) {
 		console.log('Failed to get u_FragColor variable');
 		return;
-	}
+	}*/
 }// End initEventHandelers

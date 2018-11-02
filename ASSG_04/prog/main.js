@@ -1,10 +1,11 @@
 // Global declerations
 let shapeFlag = "square"; // Default shape is square
+let solidColorFlag = true; // Default color is solid
 let wireFrameFlag = false; // Default is no wireframe
 
 // All the event handlers
 let canvas, gl;
-let a_Position/*, a_PointSize*/;
+let a_Position, a_Color;
 let u_FragColor, u_ModelMatrix;
 
 // Holds every geometry in the scene
@@ -87,6 +88,7 @@ function main() {
 		}
 	);
 
+	// Will toggle wireframe button on / off, rerender for new option
 	document.getElementById("wireFrameButton").addEventListener("click",
 		function myFunction() {
 			if(wireFrameFlag == false) {
@@ -99,6 +101,20 @@ function main() {
 			}
 			// Rerendering to update selection
 			render();
+		}
+	);
+
+	// Will toggle solid vs. rainbow button. Change shape color accordingly
+	document.getElementById("shapeColorButton").addEventListener("click",
+		function myFunction() {
+			if(solidColorFlag == true) {
+				solidColorFlag = false;
+				sendTextToHTML("Rainbow", "shapeColorButton");
+			}
+			else if(solidColorFlag == false) {
+				solidColorFlag = true;
+				sendTextToHTML("Solid Color", "shapeColorButton");
+			}
 		}
 	);
 
