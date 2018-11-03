@@ -22,9 +22,10 @@ let ASSIGN1_FSHADER =
 
 let ASSIGN1_VSHADER =
   `attribute vec4 a_Position;
+   attribute vec4 a_Color;
+   
    uniform mat4 u_ModelMatrix;
 
-   attribute vec4 a_Color;
    varying vec4 v_Color;
 
    void main() {

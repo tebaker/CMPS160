@@ -88,7 +88,7 @@ function initEventHandelers() {
 		return;
 	}
 
-	// Initialize shaders
+	// Initializing default shaders and texture shaders
 	if(!initShaders(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER)) {
 		console.log('Failed to initialize shaders');
 		return;

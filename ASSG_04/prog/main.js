@@ -34,6 +34,11 @@ function main() {
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 
+	// Enable the hidden surface removal function
+	// gl.enable(gl.DEPTH_TEST);
+	// Clear the color and depth buffer
+	// gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
 	// Flag for if the mouse is currently down or not
 	let isMouseDown = false;
 
