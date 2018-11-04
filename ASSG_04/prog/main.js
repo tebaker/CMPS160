@@ -1,15 +1,22 @@
 // Global declerations
 let shapeFlag = "square"; // Default shape is square
-let solidColorFlag = true; // Default color is solid
+let solidColorFlag = false; // Default color is solid
 let wireFrameFlag = false; // Default is no wireframe
 
 // All the event handlers
 let canvas, gl;
 let a_Position, a_Color;
-let u_FragColor, u_ModelMatrix;
+let u_FragColor, u_ModelMatrix, u_Sampler;
 
 // Holds every geometry in the scene
 let scene;
+
+// Holding the shader programs
+let defaultShaderProgram, texShaderProgram;
+
+// holding the shaders
+let defaultFShader, defaultVShader;
+let texFShader, texVShader;
 
 // Math
 let mathPi = Math.PI;
@@ -30,6 +37,9 @@ function main() {
 	// Initializing all the event handlers defined as globals above
 	initEventHandelers();
 
+	// gl.linkProgram(defaultShaderProgram);
+	// gl.useProgram(defaultShaderProgram);
+
 	// Setting clear color and clearing so screen is black on start
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
@@ -45,14 +55,14 @@ function main() {
 	// Function for when the mouse is pressed
 	canvas.onmousedown = function(ev) {
 		// console.log("But I need to poop too!");
-		isMouseDown = true
+		isMouseDown = true;
 		click(ev);
 		render();
 	}
 
 	// Resetting the mouse down flag to false
 	document.onmouseup   = function() {
-		isMouseDown = false
+		isMouseDown = false;
 	};
 
 	// Check for if mouse is being dragged

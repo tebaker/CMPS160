@@ -119,4 +119,43 @@ function initEventHandelers() {
 		console.log('Failed to get u_FragColor variable');
 		return;
 	}*/
+
+
+	defaultShaderProgram = gl.createProgram();
+
+	defaultVShader = createShader(gl, ASSIGN1_VSHADER, gl.VERTEX_SHADER);
+	defaultFShader = createShader(gl, ASSIGN1_FSHADER, gl.FRAGMENT_SHADER);
+
+	// Attach default shaders
+	gl.attachShader(defaultShaderProgram, defaultVShader);
+	gl.attachShader(defaultShaderProgram, defaultFShader);
+
+	texShaderProgram = gl.createProgram();
+
+	texVShader = createShader(gl, TEX_VSHADER, gl.VERTEX_SHADER);
+	texFShader = createShader(gl, TEX_FSHADER, gl.FRAGMENT_SHADER);
+
+	// Attach pre-existing shaders
+	gl.attachShader(texShaderProgram, texVShader);
+	gl.attachShader(texShaderProgram, texFShader);
+
+	/*
+		To use this shader program, run these two commands
+
+		gl.linkProgram(program1);
+		gl.useProgram(program1);
+	*/
 }// End initEventHandelers
+
+function createShader (gl, sourceCode, type) {
+	// Compiles either a shader of type gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
+	var shader = gl.createShader( type );
+	gl.shaderSource( shader, sourceCode );
+	gl.compileShader( shader );
+
+	if ( !gl.getShaderParameter(shader, gl.COMPILE_STATUS) ) {
+		var info = gl.getShaderInfoLog( shader );
+		throw 'Could not compile WebGL program. \n\n' + info;
+	}
+	return shader;
+}
