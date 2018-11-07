@@ -1,21 +1,21 @@
 /**
-* Specifies a TexCube. A subclass of Geometry.
+* Specifies a NonRotatingTexCube. A subclass of Geometry.
 *
 * @author Talon Baker
-* @this {TexCube}
+* @this {NonRotatingTexCube}
 */
-class TexCube extends Geometry {
+class NonRotatingTexCube extends Geometry {
 	/**
-	* Constructor for TexCube.
+	* Constructor for NonRotatingTexCube.
 	*
 	* @constructor
-	* @param {Number} size The size of the TexCube drawn
-	* @param {Number} centerX The center x-position of the TexCube
-	* @param {Number} centerY The center y-position of the TexCube
+	* @param {Number} size The size of the NonRotatingTexCube drawn
+	* @param {Number} centerX The center x-position of the NonRotatingTexCube
+	* @param {Number} centerY The center y-position of the NonRotatingTexCube
 	*/
 	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, colorFlag, imgPath) {
 		super();
-		super.shape = "TexCube";
+		super.shape = "NonRotatingTexCube";
 		super.centerPoint = {x: centerX, y: centerY};
 		this.color = {r: rVal, g: gVal, b: bVal};
 		super.size = sizeVal;
@@ -128,12 +128,12 @@ class TexCube extends Geometry {
 	}
 
 	/**
-	* Generates the vertices of the TexCube.
+	* Generates the vertices of the NonRotatingTexCube.
 	*
 	* @private
-	* @param {Number} size The size of the TexCube drawn
-	* @param {Number} centerX The center x-position of the TexCube
-	* @param {Number} centerY The center y-position of the TexCube
+	* @param {Number} size The size of the NonRotatingTexCube drawn
+	* @param {Number} centerX The center x-position of the NonRotatingTexCube
+	* @param {Number} centerY The center y-position of the NonRotatingTexCube
 	*/
 	generateTexCubeVertices(centerX, centerY, size) {
 		/*
@@ -471,4 +471,4 @@ class TexCube extends Geometry {
 				// c2
 				this.vertices.addUVs(0.0, 0.0);
 	}// End generateTexCubeVertices
-}// End class TexCube
+}// End class NonRotatingTexCube

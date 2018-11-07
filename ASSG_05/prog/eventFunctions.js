@@ -48,7 +48,7 @@ function click(ev) {
 		break;
 
 	case "texCube":
-		let newTexCube = new TexCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag, "external/textures/flcl.jpg");
+		let newTexCube = new TexCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag, "external/textures/checkerboard.png");
 		scene.addGeometry(newTexCube);
 		break;
 
@@ -83,8 +83,6 @@ function clearCanvas(gl) {
 
 // Definind all the event handlers. Global declerations in main
 function initEventHandelers() {
-	scene = new Scene();
-
 	// Retrieve <canvas> element
 	canvas = document.getElementById('webgl');
 	if(!canvas) {
@@ -99,6 +97,25 @@ function initEventHandelers() {
 		return;
 	}
 
+	// Creating scene that will hold all geometries
+	scene = new Scene();
+
+	let checkerBoardImage = new Image();
+	checkerBoardImage.src = "external/textures/checkerboard.png";
+
+	let flclImage = new Image();
+	flclImage.src = "external/textures/flcl.jpg";
+	
+	let catImage = new Image();
+	catImage.src = "external/textures/cat_diff.jpg";
+	
+	let teapotImage = new Image();
+	teapotImage.src = "external/textures/TeapotTex.png";
+	
+	let jamesHeadImage = new Image();
+	jamesHeadImage.src = "external/textures/merge3d.jpg";
+
+
 	// Creating shader program
 	defaultShaderProgram = createProgram(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER);
 
@@ -109,7 +126,7 @@ function initEventHandelers() {
 function initTextures(n, imgPath) {
 	let texture = gl.createTexture();
 
-	let u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+	u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
 
 	let image = new Image();
 

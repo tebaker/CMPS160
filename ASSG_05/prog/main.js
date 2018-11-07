@@ -8,6 +8,9 @@ let canvas, gl;
 let a_Position, a_Color;
 let u_FragColor, u_ModelMatrix, u_Sampler;
 
+// Images
+let checkerBoardImage, flclImage, catImage, teapotImage, jamesHeadImage;
+
 // Holds every geometry in the scene
 let scene;
 
@@ -33,20 +36,12 @@ function main() {
 	// Initializing all the event handlers defined as globals above
 	initEventHandelers();
 
-	// Setting clear color and clearing so screen is black on start
-	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-	gl.clear(gl.COLOR_BUFFER_BIT);	
 
-
-
-	let newTexCube1 = new TexCube(0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/flcl.jpg");
+	// console.log(checkerBoardImage.src);
+	
+	let newTexCube1 = new TexCube(0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
 		scene.addGeometry(newTexCube1);
-
-
-	// Enable the hidden surface removal function
-	// gl.enable(gl.DEPTH_TEST);
-	// Clear the color and depth buffer
-	// gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	
 
 	// Flag for if the mouse is currently down or not
 	let isMouseDown = false;
@@ -70,6 +65,25 @@ function main() {
 			render();
 		}
 	};
+
+	document.addEventListener('keydown', function(event) {
+		// W
+		if(event.keyCode == 87) {
+			console.log("W");
+		}
+		// A
+		if(event.keyCode == 65) {
+			console.log("A");;
+		}
+		// S
+		if(event.keyCode == 83) {
+			console.log("S");;
+		}
+		// D
+		if(event.keyCode == 68) {
+			console.log("D");
+		}
+	});
 
 	tick();
 
@@ -100,63 +114,4 @@ function main() {
 		}
 	);
 
-	// Will toggle wireframe button on / off, rerender for new option
-	document.getElementById("wireFrameButton").addEventListener("click",
-		function myFunction() {
-			if(wireFrameFlag == false) {
-				wireFrameFlag = true;
-				sendTextToHTML("Drawing Mode (Wireframe ON):", "wireframeText");
-			}
-			else if(wireFrameFlag == true) {
-				wireFrameFlag = false;
-				sendTextToHTML("Drawing Mode (Wireframe OFF):", "wireframeText");
-			}
-			// Rerendering to update selection
-			render();
-		}
-	);
-
-	// Will toggle solid vs. rainbow button. Change shape color accordingly
-	document.getElementById("shapeColorButton").addEventListener("click",
-		function myFunction() {
-			if(solidColorFlag == true) {
-				solidColorFlag = false;
-				sendTextToHTML("Rainbow", "shapeColorButton");
-			}
-			else if(solidColorFlag == false) {
-				solidColorFlag = true;
-				sendTextToHTML("Solid Color", "shapeColorButton");
-			}
-		}
-	);
-
-	document.getElementById("squaresButton").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "square";
-		}
-	);
-
-	document.getElementById("trianglesButton").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "triangle";
-		}
-	);
-
-	document.getElementById("circlesButton").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "circle";
-		}
-	);
-
-	document.getElementById("cubesButton").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "texCube";
-		}
-	);
-
-	document.getElementById("texSquareButton").addEventListener("click",
-		function myFunction() {
-			shapeFlag = "texTest";
-		}
-	);
 }// End main

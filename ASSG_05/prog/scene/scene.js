@@ -12,6 +12,11 @@ class Scene {
 	*/
 	constructor() {
 		this.geometries = []; // Geometries to be drawn
+
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		// Enable the hidden surface removal function
+		gl.enable(gl.DEPTH_TEST);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);	
 	}
 
 	/**
@@ -28,9 +33,6 @@ class Scene {
 	*/
 	clearGeometry() {
 		this.geometries = [];
-
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		gl.clear(gl.COLOR_BUFFER_BIT);
 	}
 
 	// Popping out-of-bounds shape from scene to save frames
@@ -50,9 +52,6 @@ class Scene {
 			this.geometries[i].updateAnimation();
 		}
 
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		gl.clear(gl.COLOR_BUFFER_BIT);
-
 		scene.render();
 	}
 
@@ -60,14 +59,16 @@ class Scene {
 	* Renders all the Geometry within the scene.
 	*/
 	render() {
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		// Enable the hidden surface removal function
+		gl.enable(gl.DEPTH_TEST);
 		gl.clear(gl.COLOR_BUFFER_BIT);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 		// gl.clearDepth(gl.getParameter(gl.DEPTH_CLEAR_VALUE));
 		// gl.enable(gl.DEPTH_TEST);
 
 		// Starting counter for draw time
-		let time0 = performance.now();
+		// let time0 = performance.now();
 
 		// Looping through every geometry
 		for(let i = 0; i < this.geometries.length; ++i) {
@@ -75,7 +76,7 @@ class Scene {
 		}
 
 		// Ending counter. Printing results
-		let time1 = performance.now();
-		sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
+		// let time1 = performance.now();
+		// sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
 	}
 }
