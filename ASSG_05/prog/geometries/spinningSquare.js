@@ -54,7 +54,6 @@ class SpinningSquare extends Square {
 
 		// Pass the rotation matrix to the vertex shader
 		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
-		this.render();
 	}
 
 	/**

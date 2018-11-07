@@ -18,12 +18,13 @@ function click(ev) {
 	let size = document.getElementById("sizeSlider").value/100;
 
 	let segCount = document.getElementById("segmentSlider").value;
-
-	// console.log("x: " + xCoord + " y: " + yCoord);
-	// console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
-	// console.log("size: " + size + " segCount: " + segCount);
-
+	
 	console.log(shapeFlag);
+	console.log("x: " + xCoord + " y: " + yCoord);
+	console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
+	console.log("size: " + size + " segCount: " + segCount);
+
+	
 
 	switch(shapeFlag) {
 	case "square":
@@ -44,6 +45,11 @@ function click(ev) {
 	case "cube":
 		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
 		scene.addGeometry(newCube);
+		break;
+
+	case "texCube":
+		let newTexCube = new TexCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag, "external/textures/flcl.jpg");
+		scene.addGeometry(newTexCube);
 		break;
 
 	case "obj":
@@ -98,10 +104,9 @@ function initEventHandelers() {
 
 	texShaderProgram = createProgram(gl, TEX_VSHADER, TEX_FSHADER);
 
-
 }// End initEventHandelers
 
-function initTextures(n) {
+function initTextures(n, imgPath) {
 	let texture = gl.createTexture();
 
 	let u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
@@ -112,7 +117,7 @@ function initTextures(n) {
 		loadTexture(n, texture, u_Sampler, image);
 	}
 
-	image.src = "external/textures/checkerboard.png";
+	image.src = imgPath;
 }
 
 function loadTexture(n, texture, u_Sampler, image) {

@@ -33,12 +33,15 @@ function main() {
 	// Initializing all the event handlers defined as globals above
 	initEventHandelers();
 
-	// gl.linkProgram(defaultShaderProgram);
-	// gl.useProgram(defaultShaderProgram);
-
 	// Setting clear color and clearing so screen is black on start
 	gl.clearColor(0.0, 0.0, 0.0, 1.0);
-	gl.clear(gl.COLOR_BUFFER_BIT);
+	gl.clear(gl.COLOR_BUFFER_BIT);	
+
+
+
+	let newTexCube1 = new TexCube(0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/flcl.jpg");
+		scene.addGeometry(newTexCube1);
+
 
 	// Enable the hidden surface removal function
 	// gl.enable(gl.DEPTH_TEST);
@@ -50,7 +53,6 @@ function main() {
 
 	// Function for when the mouse is pressed
 	canvas.onmousedown = function(ev) {
-		// console.log("But I need to poop too!");
 		isMouseDown = true;
 		click(ev);
 		render();
@@ -64,7 +66,6 @@ function main() {
 	// Check for if mouse is being dragged
 	canvas.onmousemove = function(ev) {
 		if(isMouseDown) {
-			// console.log("I'm in here! Close the door!");
 			click(ev);
 			render();
 		}
@@ -149,7 +150,7 @@ function main() {
 
 	document.getElementById("cubesButton").addEventListener("click",
 		function myFunction() {
-			shapeFlag = "cube";
+			shapeFlag = "texCube";
 		}
 	);
 

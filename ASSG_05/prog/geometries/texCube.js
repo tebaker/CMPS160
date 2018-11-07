@@ -13,7 +13,7 @@ class TexCube extends Geometry {
 	* @param {Number} centerX The center x-position of the TexCube
 	* @param {Number} centerY The center y-position of the TexCube
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, colorFlag) {
+	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, colorFlag, imgPath) {
 		super();
 		super.shape = "TexCube";
 		super.centerPoint = {x: centerX, y: centerY};
@@ -25,6 +25,8 @@ class TexCube extends Geometry {
 		this.centerY = centerY;
 
 		this.isSolidColor = colorFlag;
+
+		this.imgPath = imgPath;
 
 		this.generateTexCubeVertices(centerX, centerY, sizeVal);
 
@@ -57,7 +59,7 @@ class TexCube extends Geometry {
 			this.modelMatrix = translateMatrix2.multiply(this.modelMatrix);
 
 		// Pass the rotation matrix to the vertex shader
-		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
+		// gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
 		this.render();
 	}
 
@@ -65,15 +67,58 @@ class TexCube extends Geometry {
 	* Overloaded base class renders in order to update animaton / movement
 	*/
 	render() {
-		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
+		// Setting shader to the default shader
+				useShader(gl, texShaderProgram);
 
-		let renderVertices = new Float32Array(this.vertices.getArray(this.isSolidColor, this.color.r, this.color.g, this.color.b));
-		let n = this.vertices.getLength() / 3;
+				// Get the location of attribute variable a_Position
+				a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+				if (a_Position < 0) {
+					console.log('Fail to get the storage location of a_Position');
+					return;
+				}
 
-		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+				u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+				if (!u_ModelMatrix) { 
+					console.log('Failed to get the storage location of u_ModelMatrix');
+					return;
+				}
 
-		// Render Vertices = Float32Array.
-		sendAttributeBufferToGLSL(renderVertices, n);
+				a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+				if(a_TexCoord < 0) {
+					console.log('failed to get the storage location of a_TexCoord');
+				}
+
+				let n = this.vertices.getLength() / 3;
+
+				let renderVertices = new Float32Array(this.vertices.getTexArray());
+
+				sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+
+
+
+				initTextures(n, this.imgPath);
+
+
+
+				let renderTexCoordBuffer = gl.createBuffer();
+
+				gl.bindBuffer(gl.ARRAY_BUFFER, renderTexCoordBuffer);
+				gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
+
+				var FSIZE = renderVertices.BYTES_PER_ELEMENT;
+				
+				gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
+				gl.enableVertexAttribArray(a_Position); // Enable buffer allocation
+				
+				// Allocate the texture coordinates to a_TexCoord, and enable it.
+				var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+				
+				gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
+				gl.enableVertexAttribArray(a_TexCoord); // Enable buffer allocation
+
+
+
+				gl.drawArrays(gl.TRIANGLES, 0, n);
 	}
 
 	/**
@@ -123,24 +168,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 1 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 1.0);
 			/*023*/
 				// p2
 				this.vertices.addPoints(
@@ -162,24 +194,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 2 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(1.0, 1.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 0.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.0);
 		/*RIGHT SQUARE*/
 			/*324*/
 				// p3
@@ -202,24 +221,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 3 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.5);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 1.0);
 			/*345*/
 				// p3
 				this.vertices.addPoints(
@@ -241,24 +247,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 4 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(1.0, 1.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 0.5);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.5);
 		/*BACK SQUARE*/
 			/*546*/
 				// p5
@@ -281,24 +274,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 5 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 3.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(3.0, 3.0);
 			/*567*/
 				// p5
 				this.vertices.addPoints(
@@ -320,24 +300,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 6 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(3.0, 3.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(3.0, 0.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.0);
 		/*LEFT SQUARE*/
 			/*761*/
 				// p7
@@ -360,24 +327,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 7 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(2.0, 2.0);
 			/*710*/
 				// p7
 				this.vertices.addPoints(
@@ -399,24 +353,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 8 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(2.0, 2.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(2.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.0);
 		/*TOP SQUARE*/
 			/*164*/
 				// p1
@@ -439,24 +380,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 9 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.5);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.5, 0.5);
 			/*142*/
 				// p1
 				this.vertices.addPoints(
@@ -478,24 +406,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 10 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.5, 0.5);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 0.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.0);
 		/*BOTTOM SQUARE*/
 			/*703*/
 				// p7
@@ -518,24 +433,11 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 11 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(0.0, 0.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(1.0, 1.0);
 			/*735*/
 				// p7
 				this.vertices.addPoints(
@@ -557,23 +459,10 @@ class TexCube extends Geometry {
 				);
 			/*TRIANGLE 12 COLORS*/
 				// c0
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
-
+				this.vertices.addUVs(1.0, 1.0);
 				// c1
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 1.0);
 				// c2
-				this.vertices.addColors(
-					Math.random(),
-					Math.random(),
-					Math.random()
-				)
+				this.vertices.addUVs(0.0, 0.0);
 	}// End generateTexCubeVertices
 }// End class TexCube

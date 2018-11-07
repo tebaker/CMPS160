@@ -95,7 +95,7 @@ class SpinningTexSquare extends Geometry {
 
 
 
-		initTextures(n);
+		initTextures(n, "/external/textures/checkerboard.png");
 
 
 
@@ -118,6 +118,8 @@ class SpinningTexSquare extends Geometry {
 
 
 		gl.drawArrays(gl.TRIANGLES, 0, n);
+
+		useShader(gl, defaultShaderProgram);
 
 	}
 
