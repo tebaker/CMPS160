@@ -152,4 +152,10 @@ function main() {
 			shapeFlag = "cube";
 		}
 	);
+
+	document.getElementById("texSquareButton").addEventListener("click",
+		function myFunction() {
+			shapeFlag = "texTest";
+		}
+	);
 }// End main

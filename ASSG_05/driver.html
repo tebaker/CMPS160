@@ -1,0 +1,102 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title> "Talon's Assignment 4 </title>
+		<!-- Include external libraries -->
+		<script src = "lib/webgl-utils.js"></script>
+		<script src = "lib/webgl-debug.js"></script>
+		<script src = "lib/cuon-utils.js"></script>
+		<script src = "lib/cuon-matrix.js"></script>
+
+		<!-- Include main program -->
+		<script src = "prog/main.js"></script>
+
+		<!-- Include internal functions -->
+		<script src = "prog/eventFunctions.js"></script>
+		<script src = "prog/glslFunctions.js"></script>
+		<script src = "prog/htmlFunctions.js"></script>
+
+		<!-- Include time and animation functions -->
+		<script src = "prog/tick.js"></script>
+
+
+
+		<!-- Include scene objects -->
+		<script src = "prog/scene/scene.js"></script>
+		<script src = "prog/scene/vertex.js"></script>
+		<script src = "prog/scene/geometry.js"></script>
+
+		<!-- Include geometric objects -->
+		<script src = "prog/geometries/circle.js"></script>
+		<script src = "prog/geometries/square.js"></script>
+		<script src = "prog/geometries/triangle.js"></script>
+		<script src = "prog/geometries/randomCircle.js"></script>
+		<script src = "prog/geometries/spinningSquare.js"></script>
+		<script src = "prog/geometries/fluctuatingTriangle.js"></script>
+		<script src = "prog/geometries/tiltedCube.js"></script>
+		<script src = "prog/geometries/texCube.js"></script>
+		<script src = "prog/geometries/spinningTexSquare.js"></script>
+
+		<script src = "lib/obj_loading/loadedOBJ.js"></script>
+		<script src = "lib/obj_loading/webgl-obj-loader.js"></script>
+
+		<!-- Include shaders -->
+		<script src = "prog/shaders.js"></script>
+		<script src = "prog/texShaders.js"></script>
+	</head>
+
+	<body onload = "main()">
+		<p> Talon Baker Assignment 4 </p>
+
+		<canvas id="webgl" width="500" height="500">
+			Please use a browser that supports "canvas"
+		</canvas>
+
+		<p id="shapeDrawTime">Shapes drawn in 0.0 milliseconds</p>
+
+		<p id="clickedPointsText">x: 0.0 y: 0.0</p>
+
+		<button id="clearButton">Clear Canvas</button>
+
+		<p>Set OBJ:</p>
+		<tr>
+			<td>Select a File to Load:</td>
+			<td><input type="file" id="fileToLoad"></td>
+			<td><button id="loadFileAsText">Add OBJ To Scene</button><td>
+		</tr>
+
+		<p id="wireframeText">Drawing Mode (Wireframe OFF):</p>
+		<button id="wireFrameButton">Toggle Wireframe</button>
+
+		<p>Shapes:</p>
+		<button id="squaresButton">Square(Spin)</button>
+		<button id="trianglesButton">Triangle(Fluctuate)</button>
+		<button id="circlesButton">Circle(Wander)</button>
+		<button id="cubesButton">Cubes(Tilting)</button>
+		<button id="texSquareButton">TexSquare</button>
+
+		<p> Shape Color </p>
+		<button id="shapeColorButton">Rainbow</button>
+
+		<p></p>
+
+		<label for="redSlider">Red</label>
+			<input type="range" min="0" max="255" value="255" class="slider" id="redSlider">
+
+		<label for="greenSlider">Green</label>
+			<input type="range" min="0" max="255" value="0" class="slider" id="greenSlider">
+
+		<label for="blueSlider">Blue</label>
+			<input type="range" min="0" max="255" value="0" class="slider" id="blueSlider">
+
+		<p></p>
+
+		<label for="sizeSlider">Shape Size:</label>
+		<input type="range" min="1" max="100" value="10" class="slider" id="sizeSlider">
+
+		<label for="segmentSlider">(Circles) Segment Count:</label>
+		<input type="range" min="3" max="50" value="12" step="1" class="slider" id="segmentSlider">
+
+		<script src="main.js"></script>
+	</body>
+</html>

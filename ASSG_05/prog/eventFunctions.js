@@ -51,6 +51,11 @@ function click(ev) {
 		scene.addGeometry(newOBJ);
 		break;
 
+	case "texTest":
+		let newTexSquare = new SpinningTexSquare(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
+		scene.addGeometry(newTexSquare);
+		break;
+
 	default:
 		console.log("Default case reached. Undefined shape");
 	}
@@ -96,15 +101,32 @@ function initEventHandelers() {
 
 }// End initEventHandelers
 
-function createShader (gl, sourceCode, type) {
-	// Compiles either a shader of type gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
-	var shader = gl.createShader( type );
-	gl.shaderSource( shader, sourceCode );
-	gl.compileShader( shader );
+function initTextures(n) {
+	let texture = gl.createTexture();
 
-	if ( !gl.getShaderParameter(shader, gl.COMPILE_STATUS) ) {
-		var info = gl.getShaderInfoLog( shader );
-		throw 'Could not compile WebGL program. \n\n' + info;
+	let u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+
+	let image = new Image();
+
+	image.onload = function(){
+		loadTexture(n, texture, u_Sampler, image);
 	}
-	return shader;
+
+	image.src = "external/textures/checkerboard.png";
+}
+
+function loadTexture(n, texture, u_Sampler, image) {
+	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+	// Enable the texture unit 0
+	gl.activeTexture(gl.TEXTURE0);
+	// Bind the texture object to the target
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+	
+	// Set the texture parameters
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	// Set the texture image
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+	
+	// Set the texture unit 0 to the sampler
+	gl.uniform1i(u_Sampler, 0);
 }
