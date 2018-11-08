@@ -6,13 +6,14 @@ let wireFrameFlag = false; // Default is no wireframe
 // All the event handlers
 let canvas, gl;
 let a_Position, a_Color;
-let u_FragColor, u_ModelMatrix, u_Sampler;
+let u_FragColor, u_Sampler;
+let u_ModelMatrix, u_ViewMatrix, u_ProjMatrix;
 
 // Images
 let checkerBoardImage, flclImage, catImage, teapotImage, jamesHeadImage;
 
 // Holds every geometry in the scene
-let scene;
+let scene, camera;
 
 // Holding the shader programs
 let defaultShaderProgram, texShaderProgram;
@@ -29,6 +30,8 @@ let tickFlag = false;
 // Holding the .obj file in string form
 let objString = "";
 
+let movementAmt = 0.01;
+
 /**
  * Function called when the webpage loads.
  */
@@ -39,8 +42,12 @@ function main() {
 
 	// console.log(checkerBoardImage.src);
 	
-	let newTexCube1 = new TexCube(0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-		scene.addGeometry(newTexCube1);
+	let newTexCube1 = new NonRotatingTexCube(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
+	scene.addGeometry(newTexCube1);
+	let newTexCube2 = new NonRotatingTexCube(0.25, 0.25, -1.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
+	scene.addGeometry(newTexCube2);
+	let newTexCube3 = new NonRotatingTexCube(0.1, 0.1, -1.5, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
+	scene.addGeometry(newTexCube3);
 	
 
 	// Flag for if the mouse is currently down or not
@@ -66,22 +73,40 @@ function main() {
 		}
 	};
 
+	// WASD keydown inputs for camera movement
+	// JL keydown inputs for camera rotation
 	document.addEventListener('keydown', function(event) {
+	// Camera movement
 		// W
 		if(event.keyCode == 87) {
 			console.log("W");
+			camera.moveZ(movementAmt);
 		}
 		// A
 		if(event.keyCode == 65) {
-			console.log("A");;
+			console.log("A");
+			camera.moveX(movementAmt);
 		}
 		// S
 		if(event.keyCode == 83) {
-			console.log("S");;
+			console.log("S");
+			camera.moveZ(-movementAmt);
 		}
 		// D
 		if(event.keyCode == 68) {
 			console.log("D");
+			camera.moveX(-movementAmt);
+		}
+	// Camera rotation
+		// J
+		if(event.keyCode == 74) {
+			console.log("J");
+			camera.rotate(movementAmt, 0, 0, 0);
+		}
+		// L
+		if(event.keyCode == 76) {
+			console.log("L");
+			camera.rotate(-movementAmt, 0, 0, 0);
 		}
 	});
 

@@ -13,18 +13,13 @@ class NonRotatingTexCube extends Geometry {
 	* @param {Number} centerX The center x-position of the NonRotatingTexCube
 	* @param {Number} centerY The center y-position of the NonRotatingTexCube
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, colorFlag, imgPath) {
+	constructor(centerX, centerY, centerZ, rVal, gVal, bVal, sizeVal, colorFlag, imgPath) {
 		super();
-		super.shape = "NonRotatingTexCube";
-		super.centerPoint = {x: centerX, y: centerY};
-		this.color = {r: rVal, g: gVal, b: bVal};
-		super.size = sizeVal;
 		super.vertices = new Vertex();
 
 		this.centerX = centerX;
 		this.centerY = centerY;
-
-		this.isSolidColor = colorFlag;
+		this.centerZ = centerZ;
 
 		this.imgPath = imgPath;
 
@@ -42,89 +37,87 @@ class NonRotatingTexCube extends Geometry {
 	}
 
 	// will update model direction and travel location
-	updateAnimation() {
-		// console.log(this.centerX, this.centerY);
-		let translateMatrix1 = new Matrix4();
-		let rotateMatrix = new Matrix4();
-		let translateMatrix2 = new Matrix4();
-
-		//T
-		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
-
-			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
-
-		//R
-		rotateMatrix.setRotate(this.currentAngle, this.currentAngle, this.currentAngle, this.currentAngle);
-
-			this.modelMatrix = rotateMatrix.multiply(this.modelMatrix);
-
-		//T
-		translateMatrix2.setTranslate(this.centerX, this.centerY, 0);
-
-			this.modelMatrix = translateMatrix2.multiply(this.modelMatrix);
-
-		// Pass the rotation matrix to the vertex shader
-		// gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
-		this.render();
-	}
+	updateAnimation() { }
 
 	/**
 	* Overloaded base class renders in order to update animaton / movement
 	*/
 	render() {
 		
-// Setting shader to the default shader
-				useShader(gl, texShaderProgram);
-				
-				// Get the location of attribute variable a_Position
-				a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-				if (a_Position < 0) {
-					console.log('Fail to get the storage location of a_Position');
-					return;
-				}
+		// Setting shader to the default shader
+		useShader(gl, texShaderProgram);
+		
+		// Get the location of attribute variable a_Position
+		a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+		if (a_Position < 0) {
+			console.log('Fail to get the storage location of a_Position');
+			return;
+		}
 
-				u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-				if (!u_ModelMatrix) { 
-					console.log('Failed to get the storage location of u_ModelMatrix');
-					return;
-				}
+		u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+		if (!u_ModelMatrix) { 
+			console.log('Failed to get the storage location of u_ModelMatrix');
+			return;
+		}
 
-				a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
-				if(a_TexCoord < 0) {
-					console.log('failed to get the storage location of a_TexCoord');
-				}
+		a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+		if(a_TexCoord < 0) {
+			console.log('failed to get the storage location of a_TexCoord');
+		}
 
-				let n = this.vertices.getLength() / 3;
+		u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
+		if(u_ViewMatrix < 0) {
+			console.log('failed to get the storage location of u_ViewMatrix');
+		}
 
-				let renderVertices = new Float32Array(this.vertices.getTexArray());
+		u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
+		if(u_ProjMatrix < 0) {
+			console.log('failed to get the storage location of u_ProjMatrix');
+		}
 
-				sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+		let n = this.vertices.getLength() / 3;
 
+		let renderVertices = new Float32Array(this.vertices.getTexArray());
 
-
-				// initTextures(n, this.imgPath);
-
-
-
-				let renderTexCoordBuffer = gl.createBuffer();
-
-				gl.bindBuffer(gl.ARRAY_BUFFER, renderTexCoordBuffer);
-				gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
-
-				var FSIZE = renderVertices.BYTES_PER_ELEMENT;
-				
-				gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
-				gl.enableVertexAttribArray(a_Position); // Enable buffer allocation
-				
-				// Allocate the texture coordinates to a_TexCoord, and enable it.
-				var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
-				
-				gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
-				gl.enableVertexAttribArray(a_TexCoord); // Enable buffer allocation
+		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
 
 
 
-				gl.drawArrays(gl.TRIANGLES, 0, n);
+
+		// Setting camera movement stuff
+		let viewMatrix = new Matrix4();
+		viewMatrix = camera.returnViewMatrix();
+
+		gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+
+		camera.projectionMatrix.setOrtho(-1, 1, -1, 1, 0.01, 10000);
+
+		gl.uniformMatrix4fv(u_ProjMatrix, false, camera.projectionMatrix.elements);
+
+
+
+
+
+
+		let renderTexCoordBuffer = gl.createBuffer();
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, renderTexCoordBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
+
+		var FSIZE = renderVertices.BYTES_PER_ELEMENT;
+		
+		gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
+		gl.enableVertexAttribArray(a_Position); // Enable buffer allocation
+		
+		// Allocate the texture coordinates to a_TexCoord, and enable it.
+		var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+		
+		gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
+		gl.enableVertexAttribArray(a_TexCoord); // Enable buffer allocation
+
+
+
+		gl.drawArrays(gl.TRIANGLES, 0, n);
 	}
 
 	/**
@@ -200,11 +193,11 @@ class NonRotatingTexCube extends Geometry {
 				);
 			/*TRIANGLE 2 COLORS*/
 				// c0
-				this.vertices.addUVs(1.0, 1.0);
-				// c1
-				this.vertices.addUVs(1.0, 0.0);
-				// c2
 				this.vertices.addUVs(0.0, 0.0);
+				// c1
+				this.vertices.addUVs(1.0, 1.0);
+				// c2
+				this.vertices.addUVs(1.0, 0.0);
 		/*RIGHT SQUARE*/
 			/*324*/
 				// p3
@@ -253,11 +246,11 @@ class NonRotatingTexCube extends Geometry {
 				);
 			/*TRIANGLE 4 COLORS*/
 				// c0
-				this.vertices.addUVs(1.0, 1.0);
-				// c1
-				this.vertices.addUVs(1.0, 0.0);
-				// c2
 				this.vertices.addUVs(0.0, 0.0);
+				// c1
+				this.vertices.addUVs(1.0, 1.0);
+				// c2
+				this.vertices.addUVs(1.0, 0.0);
 		/*BACK SQUARE*/
 			/*546*/
 				// p5
@@ -306,11 +299,11 @@ class NonRotatingTexCube extends Geometry {
 				);
 			/*TRIANGLE 6 COLORS*/
 				// c0
-				this.vertices.addUVs(1.0, 1.0);
-				// c1
-				this.vertices.addUVs(1.0, 0.0);
-				// c2
 				this.vertices.addUVs(0.0, 0.0);
+				// c1
+				this.vertices.addUVs(1.0, 1.0);
+				// c2
+				this.vertices.addUVs(1.0, 0.0);
 		/*LEFT SQUARE*/
 			/*761*/
 				// p7
@@ -359,11 +352,11 @@ class NonRotatingTexCube extends Geometry {
 				);
 			/*TRIANGLE 8 COLORS*/
 				// c0
-				this.vertices.addUVs(1.0, 1.0);
-				// c1
-				this.vertices.addUVs(1.0, 0.0);
-				// c2
 				this.vertices.addUVs(0.0, 0.0);
+				// c1
+				this.vertices.addUVs(1.0, 1.0);
+				// c2
+				this.vertices.addUVs(1.0, 0.0);
 		/*TOP SQUARE*/
 			/*164*/
 				// p1
@@ -412,11 +405,11 @@ class NonRotatingTexCube extends Geometry {
 				);
 			/*TRIANGLE 10 COLORS*/
 				// c0
-				this.vertices.addUVs(1.0, 1.0);
-				// c1
-				this.vertices.addUVs(1.0, 0.0);
-				// c2
 				this.vertices.addUVs(0.0, 0.0);
+				// c1
+				this.vertices.addUVs(1.0, 1.0);
+				// c2
+				this.vertices.addUVs(1.0, 0.0);
 		/*BOTTOM SQUARE*/
 			/*703*/
 				// p7

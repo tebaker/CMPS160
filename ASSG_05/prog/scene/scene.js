@@ -64,19 +64,9 @@ class Scene {
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-		// gl.clearDepth(gl.getParameter(gl.DEPTH_CLEAR_VALUE));
-		// gl.enable(gl.DEPTH_TEST);
-
-		// Starting counter for draw time
-		// let time0 = performance.now();
-
 		// Looping through every geometry
 		for(let i = 0; i < this.geometries.length; ++i) {
 			this.geometries[i].render();
 		}
-
-		// Ending counter. Printing results
-		// let time1 = performance.now();
-		// sendTextToHTML("Shapes drawn in " + (time1 - time0) + " milliseconds", "shapeDrawTime");
 	}
 }

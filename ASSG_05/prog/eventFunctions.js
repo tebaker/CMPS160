@@ -99,6 +99,7 @@ function initEventHandelers() {
 
 	// Creating scene that will hold all geometries
 	scene = new Scene();
+	camera = new Camera();
 
 	let checkerBoardImage = new Image();
 	checkerBoardImage.src = "external/textures/checkerboard.png";
