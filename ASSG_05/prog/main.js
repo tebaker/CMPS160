@@ -30,7 +30,10 @@ let tickFlag = false;
 // Holding the .obj file in string form
 let objString = "";
 
-let movementAmt = 0.01;
+let movementAmt = 0.25;
+let turnAmt = 1;
+
+let globalSize = 0.5;
 
 /**
  * Function called when the webpage loads.
@@ -39,15 +42,7 @@ function main() {
 	// Initializing all the event handlers defined as globals above
 	initEventHandelers();
 
-
-	// console.log(checkerBoardImage.src);
-	
-	let newTexCube1 = new NonRotatingTexCube(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-	scene.addGeometry(newTexCube1);
-	// let newTexCube2 = new NonRotatingTexCube(0.0, 0.0, -0.25, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-	// scene.addGeometry(newTexCube2);
-	// let newTexCube3 = new NonRotatingTexCube(0.0, 0.0, -1.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-	// scene.addGeometry(newTexCube3);
+	createWorld();
 	
 
 	// Flag for if the mouse is currently down or not
@@ -80,58 +75,37 @@ function main() {
 		// W
 		if(event.keyCode == 87) {
 			console.log("W");
-			camera.setCameraZ(movementAmt);
+			camera.moveCameraZ(-movementAmt);
 		}
 		// A
 		if(event.keyCode == 65) {
 			console.log("A");
-			camera.setCameraX(movementAmt);
+			camera.moveCameraX(-movementAmt);
 		}
 		// S
 		if(event.keyCode == 83) {
 			console.log("S");
-			camera.setCameraZ(-movementAmt);
+			camera.moveCameraZ(movementAmt);
 		}
 		// D
 		if(event.keyCode == 68) {
 			console.log("D");
-			camera.setCameraX(-movementAmt);
+			camera.moveCameraX(movementAmt);
 		}
 	// Camera rotation
 		// J
 		if(event.keyCode == 74) {
 			console.log("J");
-			camera.rotate(movementAmt, 0, 0, 0);
+			camera.turnCameraRL(-turnAmt);
 		}
 		// L
 		if(event.keyCode == 76) {
 			console.log("L");
-			camera.rotate(-movementAmt, 0, 0, 0);
+			camera.turnCameraRL(turnAmt);
 		}
 	});
 
 	tick();
-
-	// Loading obj file from html
-	document.getElementById("loadFileAsText").addEventListener("click",
-		function myFunction() {
-
-			let somethingElse;
-
-			var fileToLoad = document.getElementById("fileToLoad").files[0];
-
-			var fileReader = new FileReader();
-
-			fileReader.onload = function(fileLoadedEvent){
-
-				objString = fileLoadedEvent.target.result;
-			};
-
-			fileReader.readAsText(fileToLoad, "UTF-8");
-
-			shapeFlag = "obj";
-		}
-	);
 
 	document.getElementById("clearButton").addEventListener("click",
 		function myFunction() {

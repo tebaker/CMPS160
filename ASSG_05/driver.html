@@ -15,6 +15,8 @@
 		<script src = "prog/eventFunctions.js"></script>
 		<script src = "prog/glslFunctions.js"></script>
 		<script src = "prog/htmlFunctions.js"></script>
+		<script src = "prog/imageSample.js"></script>
+		<script src = "prog/createWorldFromImage.js"></script>
 
 		<!-- Include time and animation functions -->
 		<script src = "prog/tick.js"></script>
@@ -52,14 +54,10 @@
 			Please use a browser that supports "canvas"
 		</canvas>
 
-		<button id="clearButton">RESET</button>
+		<img id="worldMapImage" src="external/worldMap.png" width="10" height="10">
+		<img id="worldHeightMap" src="external/worldHeightMap.png" width="10" height="10">
 
-		<p>Set OBJ:</p>
-		<tr>
-			<td>Select a File to Load:</td>
-			<td><input type="file" id="fileToLoad"></td>
-			<td><button id="loadFileAsText">Add OBJ To Scene</button><td>
-		</tr>
+		<button id="clearButton">RESET</button>
 
 		<script src="main.js"></script>
 	</body>

@@ -13,7 +13,7 @@ class NonRotatingTexCube extends Geometry {
 	* @param {Number} centerX The center x-position of the NonRotatingTexCube
 	* @param {Number} centerY The center y-position of the NonRotatingTexCube
 	*/
-	constructor(centerX, centerY, centerZ, rVal, gVal, bVal, sizeVal, colorFlag, imgPath) {
+	constructor(centerX, centerY, centerZ, sizeVal, imgPath) {
 		super();
 		super.vertices = new Vertex();
 
@@ -26,7 +26,7 @@ class NonRotatingTexCube extends Geometry {
 		// Setting shader to the default shader
 		useShader(gl, texShaderProgram);
 
-		this.generateTexCubeVertices(centerX, centerY, sizeVal);
+		this.generateTexCubeVertices(centerX, centerY, centerZ, sizeVal);
 
 		this.modelMatrix = new Matrix4();
 
@@ -81,14 +81,21 @@ class NonRotatingTexCube extends Geometry {
 
 		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
 
-		camera.setCameraLookAt();
-		// camera.setCameraRotate(90, canvas.width/canvas.height, 1, 100);
+		let viewMatrix = new Matrix4();
+		let projMatrix = new Matrix4();
+
+		viewMatrix = camera.getViewMatrix();
+
+// viewMatrix.setLookAt(+/-=r/l, +/-=u/d, +/-=f/b, +/-=LR/LL, 0, -100, 0, 1, 0);
+
+  		projMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
 
 
-		// camera.rotateCamera(0.0, canvas.width/canvas.height, 1, 100);
 
-		gl.uniformMatrix4fv(u_ViewMatrix, false, camera.viewMatrix.elements);
-		gl.uniformMatrix4fv(u_ProjMatrix, false, camera.projectionMatrix.elements);
+
+
+		gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+		gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
 
 
 
@@ -124,7 +131,7 @@ class NonRotatingTexCube extends Geometry {
 	* @param {Number} centerX The center x-position of the NonRotatingTexCube
 	* @param {Number} centerY The center y-position of the NonRotatingTexCube
 	*/
-	generateTexCubeVertices(centerX, centerY, size) {
+	generateTexCubeVertices(centerX, centerY, centerZ, size) {
 		/*
 			Cube faces will be repeated 4 times for the sides
 			and 2 more times for the top and bottom.
@@ -147,19 +154,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p1
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p2
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 			/*TRIANGLE 1 COLORS*/
 				// c0
@@ -173,19 +180,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p3
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p0
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 			/*TRIANGLE 2 COLORS*/
 				// c0
@@ -200,19 +207,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size) // z
 				);
 				// p2
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size) // z
 				);
 				// p4
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 			/*TRIANGLE 3 COLORS*/
 				// c0
@@ -226,19 +233,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p4
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p5
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 			/*TRIANGLE 4 COLORS*/
 				// c0
@@ -253,19 +260,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p4
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p6
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 			/*TRIANGLE 5 COLORS*/
 				// c0
@@ -279,19 +286,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p6
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p7
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 			/*TRIANGLE 6 COLORS*/
 				// c0
@@ -306,19 +313,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p6
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p1
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 			/*TRIANGLE 7 COLORS*/
 				// c0
@@ -332,19 +339,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p1
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p0
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 			/*TRIANGLE 8 COLORS*/
 				// c0
@@ -359,19 +366,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size)  // z
 				);
 				// p6
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 				// p4
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size)  // z
 				);
 			/*TRIANGLE 9 COLORS*/
 				// c0
@@ -385,19 +392,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size) // z
 				);
 				// p4
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					-size // z
+					(centerZ + size) // z
 				);
 				// p2
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY + size), // y
-					size // z
+					(centerZ - size) // z
 				);
 			/*TRIANGLE 10 COLORS*/
 				// c0
@@ -412,19 +419,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size) // z
 				);
 				// p0
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size) // z
 				);
 				// p3
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ - size) // z
 				);
 			/*TRIANGLE 11 COLORS*/
 				// c0
@@ -438,19 +445,19 @@ class NonRotatingTexCube extends Geometry {
 				this.vertices.addPoints(
 					(centerX - size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size) // z
 				);
 				// p3
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					size // z
+					(centerZ + size) // z
 				);
 				// p5
 				this.vertices.addPoints(
 					(centerX + size), // x
 					(centerY - size), // y
-					-size // z
+					(centerZ + size) // z
 				);
 			/*TRIANGLE 12 COLORS*/
 				// c0

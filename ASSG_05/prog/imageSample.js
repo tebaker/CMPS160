@@ -9,7 +9,7 @@ function sampleImageColor(image) {
 
   canvas.height = image.height;
   canvas.width = image.width;
-  console.log(canvas);
+  // console.log(canvas);
   var context = canvas.getContext('2d');
   context.drawImage(image, 0, 0);
 
