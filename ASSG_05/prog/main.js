@@ -44,10 +44,10 @@ function main() {
 	
 	let newTexCube1 = new NonRotatingTexCube(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
 	scene.addGeometry(newTexCube1);
-	let newTexCube2 = new NonRotatingTexCube(0.25, 0.25, -1.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-	scene.addGeometry(newTexCube2);
-	let newTexCube3 = new NonRotatingTexCube(0.1, 0.1, -1.5, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
-	scene.addGeometry(newTexCube3);
+	// let newTexCube2 = new NonRotatingTexCube(0.0, 0.0, -0.25, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
+	// scene.addGeometry(newTexCube2);
+	// let newTexCube3 = new NonRotatingTexCube(0.0, 0.0, -1.0, 1.0, 1.0, 1.0, 0.2, false, "external/textures/checkerboard.png");
+	// scene.addGeometry(newTexCube3);
 	
 
 	// Flag for if the mouse is currently down or not
@@ -80,22 +80,22 @@ function main() {
 		// W
 		if(event.keyCode == 87) {
 			console.log("W");
-			camera.moveZ(movementAmt);
+			camera.setCameraZ(movementAmt);
 		}
 		// A
 		if(event.keyCode == 65) {
 			console.log("A");
-			camera.moveX(movementAmt);
+			camera.setCameraX(movementAmt);
 		}
 		// S
 		if(event.keyCode == 83) {
 			console.log("S");
-			camera.moveZ(-movementAmt);
+			camera.setCameraZ(-movementAmt);
 		}
 		// D
 		if(event.keyCode == 68) {
 			console.log("D");
-			camera.moveX(-movementAmt);
+			camera.setCameraX(-movementAmt);
 		}
 	// Camera rotation
 		// J

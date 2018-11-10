@@ -81,17 +81,13 @@ class NonRotatingTexCube extends Geometry {
 
 		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
 
+		camera.setCameraLookAt();
+		// camera.setCameraRotate(90, canvas.width/canvas.height, 1, 100);
 
 
+		// camera.rotateCamera(0.0, canvas.width/canvas.height, 1, 100);
 
-		// Setting camera movement stuff
-		let viewMatrix = new Matrix4();
-		viewMatrix = camera.returnViewMatrix();
-
-		gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
-
-		camera.projectionMatrix.setOrtho(-1, 1, -1, 1, 0.01, 10000);
-
+		gl.uniformMatrix4fv(u_ViewMatrix, false, camera.viewMatrix.elements);
 		gl.uniformMatrix4fv(u_ProjMatrix, false, camera.projectionMatrix.elements);
 
 

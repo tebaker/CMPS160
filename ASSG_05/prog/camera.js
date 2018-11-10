@@ -7,9 +7,13 @@ class Camera {
     */
     constructor() {
 
-    	this.eyeX = 0.25;
-    	this.eyeY = 0.25;
-    	this.eyeZ = 0.25;
+    	this.cameraX = 0.25;
+    	this.cameraY = 0.25;
+    	this.cameraZ = 0.25;
+
+    	this.cameraLookAtX = 0.0;
+    	this.cameraLookAtY = 0.0;
+    	this.cameraLookAtZ = 0.0;
 
     	this.rotationAngle = 0.0;
 
@@ -29,9 +33,8 @@ class Camera {
     * @param y The x-direction of your rotation
     * @param z The x-direction of your rotation
     */
-    rotate(angle, x, y, z) {
-    	this.rotationAngle += angle;
-    	this.viewMatrix.setRotate(this.rotationAngle, 0, 1, 0);
+    setCameraRotate(fovy, aspect, near, far) {
+    	this.projectionMatrix.setPerspective(fovy, aspect, near, far);
     }
 
     /**
@@ -42,24 +45,20 @@ class Camera {
     * @param y The x-direction of your rotation
     * @param z The x-direction of your rotation
     */
-    moveX(movAmt) {
-      this.eyeX += movAmt;
+    setCameraLookAt() {
+    	this.viewMatrix.setLookAt(this.cameraX, this.cameraY, this.cameraZ, this.cameraLookAtX, this.cameraLookAtY, this.cameraLookAtZ, 0, 1, 0);
     }
 
-    moveY(movAmt) {
-    	this.eyeY += movAmt;
+    setCameraX(xVal) {
+    	this.cameraX += xVal;
+    }
+    setCameraY(yVal) {
+    	this.cameraY += yVal;
+    }
+    setCameraZ(zVal) {
+    	this.cameraZ += zVal;
     }
 
-    moveZ(movAmt) {
-    	this.eyeX += movAmt;
-    }
-
-    returnViewMatrix() {
-    	let returnMatrix = new Matrix4();
-    	returnMatrix.setLookAt(this.eyeX, this.eyeY, this.eyeZ, 0, 0, 0, 0, 1, 0);
-
-    	return returnMatrix;
-    }
 
     /**
     * Changes the projection. Can be orthographic or perspective.
