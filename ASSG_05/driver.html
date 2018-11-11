@@ -11,6 +11,10 @@
 		<!-- Include main program -->
 		<script src = "prog/main.js"></script>
 
+		<!-- Include obj text files --> <script src =
+		"external/obj/bird.js"></script> <script src =
+		"external/obj/teapot.js"></script>
+
 		<!-- Include internal functions -->
 		<script src = "prog/eventFunctions.js"></script>
 		<script src = "prog/glslFunctions.js"></script>
@@ -21,8 +25,6 @@
 		<!-- Include time and animation functions -->
 		<script src = "prog/tick.js"></script>
 		<script src = "prog/camera.js"></script>
-
-
 
 		<!-- Include scene objects -->
 		<script src = "prog/scene/scene.js"></script>
@@ -53,6 +55,9 @@
 		<canvas id="webgl" width="500" height="500">
 			Please use a browser that supports "canvas"
 		</canvas>
+
+		<label for="fovSlider">FOV Slider:</label>
+		<input type="range" min="1" max="100" value="10" class="slider" id="sizeSlider">
 
 		<img id="worldMapImage" src="external/worldMap.png" width="10" height="10">
 		<img id="worldHeightMap" src="external/worldHeightMap.png" width="10" height="10">

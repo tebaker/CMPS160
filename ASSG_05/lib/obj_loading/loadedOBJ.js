@@ -26,22 +26,17 @@ class LoadedOBJ extends Geometry {
 
 	this.modelMatrix = new Matrix4();
 
-	// Setting shader to the default shader
-	useShader(gl, defaultShaderProgram);
+	this.flattenedArray = [];
 
 	// Translation directions
 	this.currentAngle = 1;
 
     // Construct the Mesh object containg the OBJ file's information
     var objMesh = new OBJ.Mesh(objStr);
-	
-	this.flattenedArray = objMesh.vertices;
+
+    this.verticesVertices = objMesh.vertices;
 
   }
-
-
-
-
   // will update model direction and travel location
   updateAnimation() {
   	// console.log(this.centerX, this.centerY);
@@ -73,40 +68,84 @@ class LoadedOBJ extends Geometry {
   * Overloaded base class renders in order to update animaton / movement
   */
   render() {
+  			// Setting shader to the default shader
+  			useShader(gl, texShaderProgram);
+  			
+  			// Get the location of attribute variable a_Position
+  			a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+  			if (a_Position < 0) {
+  				console.log('Fail to get the storage location of a_Position');
+  				return;
+  			}
 
-  	// Setting shader to the default shader
-  	useShader(gl, defaultShaderProgram);
+  			u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+  			if (!u_ModelMatrix) { 
+  				console.log('Failed to get the storage location of u_ModelMatrix');
+  				return;
+  			}
 
-  	// Get the location of attribute variable a_Position
-  	a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-  	if (a_Position < 0) {
-  		console.log('Fail to get the storage location of a_Position');
-  		return;
-  	}
+  			a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+  			if(a_TexCoord < 0) {
+  				console.log('failed to get the storage location of a_TexCoord');
+  			}
 
-  	u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-  	if (!u_ModelMatrix) { 
-  		console.log('Failed to get the storage location of u_ModelMatrix');
-  		return;
-  	}
+  			u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
+  			if(u_ViewMatrix < 0) {
+  				console.log('failed to get the storage location of u_ViewMatrix');
+  			}
 
-  	// Get the location of attribute variable of a_PointSize
-  	a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-  	if (a_Color < 0) {
-  		console.log('Fail to get the storage location of a_Color');
-  		return;
-  	}
+  			u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
+  			if(u_ProjMatrix < 0) {
+  				console.log('failed to get the storage location of u_ProjMatrix');
+  			}
+
+  			let n = this.verticesVertices.length / 3;
 
 
-  	sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
+  			 let renderVertices = new Float32Array(this.verticesVertices);
 
-  	let renderVertices = new Float32Array(this.flattenedArray);
-  	let n = this.flattenedArray.length / 3;
+  			sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
 
-  	sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);
+  			let viewMatrix = new Matrix4();
+  			let projMatrix = new Matrix4();
 
-  	// Render Vertices = Float32Array.
-  	sendAttributeBufferToGLSL(renderVertices, n);
+  			viewMatrix = camera.getViewMatrix();
+
+  	// viewMatrix.setLookAt(+/-=r/l, +/-=u/d, +/-=f/b, +/-=LR/LL, 0, -100, 0, 1, 0);
+
+  	  		projMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
+
+
+
+
+
+  			gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+  			gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
+
+
+
+
+
+
+  			let renderTexCoordBuffer = gl.createBuffer();
+
+  			gl.bindBuffer(gl.ARRAY_BUFFER, renderTexCoordBuffer);
+  			gl.bufferData(gl.ARRAY_BUFFER, renderVertices, gl.STATIC_DRAW);
+
+  			var FSIZE = this.verticesVertices.BYTES_PER_ELEMENT;
+  			
+  			gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
+  			gl.enableVertexAttribArray(a_Position); // Enable buffer allocation
+  			
+  			// Allocate the texture coordinates to a_TexCoord, and enable it.
+  			var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+  			
+  			gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
+  			gl.enableVertexAttribArray(a_TexCoord); // Enable buffer allocation
+
+
+
+  			gl.drawArrays(gl.TRIANGLES, 0, n);
   }
 
 }

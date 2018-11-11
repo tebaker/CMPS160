@@ -7,9 +7,9 @@ class Camera {
     */
     constructor() {
 
-    	this.cameraX = 0;
+    	this.cameraX = 4;
     	this.cameraY = 0;
-    	this.cameraZ = 10;
+    	this.cameraZ = 25;
 
     	this.cameraRotation = 0;
 

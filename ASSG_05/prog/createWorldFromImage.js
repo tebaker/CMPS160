@@ -30,13 +30,92 @@ function createWorld() {
 	// Creating world
 	for(let j = 0; j < 10; ++j) {
 		for(let i = 0; i < 10; ++i) {
-			let newTexCube = new NonRotatingTexCube(
-				globalSize*i*2,						  // x - left / right
-				a[10*i + j]/122 * globalSize - 2,	  	  // y - height
-				globalSize*j*2,						  // z - front / back
-				globalSize,							  // size constant
-				"external/textures/checkerboard.png");// image loc
-			scene.addGeometry(newTexCube);
+			// dirt: 0 - 99
+			if(a[10*i + j] <= 99) {
+
+				console.log("1");
+
+				let newTexCube = new NonRotatingTexCube(
+					globalSize*i*2,						  // x - left / right
+					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
+					globalSize*j*2,						  // z - front / back
+					globalSize,							  // size constant
+					"external/textures/dirt.png");// image loc
+				scene.addGeometry(newTexCube);
+			}
+			// grass: 100 - 150
+			else if(a[10*i + j] > 99 && a[10*i + j] <= 149) {
+
+				console.log("2");
+
+				let newTexCube = new NonRotatingTexCube(
+					globalSize*i*2,						  // x - left / right
+					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
+					globalSize*j*2,						  // z - front / back
+					globalSize,							  // size constant
+					"external/textures/dirt.png");// image loc
+				scene.addGeometry(newTexCube);
+			}
+			// snow:  149 - 200
+			else {
+
+				console.log("3");
+
+				let newTexCube = new NonRotatingTexCube(
+					globalSize*i*2,						  // x - left / right
+					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
+					globalSize*j*2,						  // z - front / back
+					globalSize,							  // size constant
+					"external/textures/dirt.png");// image loc
+				scene.addGeometry(newTexCube);
+			}
 		}
 	}
+
+
+	// Adding bird OBJ to scene
+	let teapotObj1 = new LoadedOBJ(5.0, 0.0, 0.0, 0.0, 0.0, 0.2, teapotObject, true);
+	scene.addGeometry(teapotObj1);
+
+	let teapotObj2 = new LoadedOBJ(0.0, 0.0, 0.0, 0.0, 0.0, 0.2, teapotObject, true);
+	scene.addGeometry(teapotObj2);
+
+	// // Adding bucket OBJ to scene
+	// somethingElse;
+
+	// fileToLoad = document.getElementById("bucketFile").files[0];
+
+	// fileReader = new FileReader();
+
+	// fileReader.onload = function(fileLoadedEvent){
+
+	// 	objString = fileLoadedEvent.target.result;
+	// };
+
+	// fileReader.readAsText(fileToLoad, "UTF-8");
+
+	// let bucketOBJ = new LoadedOBJ(0.0, 0.0, 0.0, 0.0, 0.0, 0.2, objString, true);
+	// scene.addGeometry(bucketOBJ);
+
+	// // Adding shovel OBJ to scene
+	// somethingElse;
+
+	// fileToLoad = document.getElementById("shovelFile").files[0];
+
+	// fileReader = new FileReader();
+
+	// fileReader.onload = function(fileLoadedEvent){
+
+	// 	objString = fileLoadedEvent.target.result;
+	// };
+
+	// fileReader.readAsText(fileToLoad, "UTF-8");
+
+	// let shovelOBJ = new LoadedOBJ(0.0, 0.0, 0.0, 0.0, 0.0, 0.2, objString, true);
+	// scene.addGeometry(shovelOBJ);
+
+
+
+
+	camera.moveCameraZ(0.0);
 }

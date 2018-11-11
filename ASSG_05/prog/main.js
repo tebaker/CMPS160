@@ -51,53 +51,20 @@ function main() {
 
 
 
-	let imagePathArray = [
-		"external/textures/checkerboard.png",
-		"external/textures/flcl.jpg",
-		"external/textures/cat_diff.pg",
-		"external/textures/TeapotTex.png",
-		"external/textures/merge3d.jpg"
-	];
+	// let imagePathArray = [
+	// 	"external/textures/checkerboard.png",
+	// 	"external/textures/flcl.jpg",
+	// 	"external/textures/cat_diff.pg",
+	// 	"external/textures/TeapotTex.png",
+	// 	"external/textures/merge3d.jpg"
+	// ];
 
-	let imagesToLoad = imagePathArray.length;
-
-	
-	
-
-
-
-
-
-
-
+	// let imagesToLoad = imagePathArray.length;
 
 
 	// Generating a world for the player to explore
 	createWorld();
-	
 
-	// Flag for if the mouse is currently down or not
-	let isMouseDown = false;
-
-	// Function for when the mouse is pressed
-	canvas.onmousedown = function(ev) {
-		isMouseDown = true;
-		click(ev);
-		render();
-	}
-
-	// Resetting the mouse down flag to false
-	document.onmouseup   = function() {
-		isMouseDown = false;
-	};
-
-	// Check for if mouse is being dragged
-	canvas.onmousemove = function(ev) {
-		if(isMouseDown) {
-			click(ev);
-			render();
-		}
-	};
 
 	// WASD keydown inputs for camera movement
 	// JL keydown inputs for camera rotation
@@ -140,7 +107,9 @@ function main() {
 
 	document.getElementById("clearButton").addEventListener("click",
 		function myFunction() {
-			clearCanvas(gl);
+			scene.clearGeometry();
+			// Generating a world for the player to explore
+			createWorld();
 		}
 	);
 
