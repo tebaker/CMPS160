@@ -32,7 +32,7 @@ function createWorld() {
 		for(let i = 0; i < 10; ++i) {
 			let newTexCube = new NonRotatingTexCube(
 				globalSize*i*2,						  // x - left / right
-				a[10*i + j]/255 * globalSize - 1,	  // y - height
+				a[10*i + j]/122 * globalSize - 2,	  	  // y - height
 				globalSize*j*2,						  // z - front / back
 				globalSize,							  // size constant
 				"external/textures/checkerboard.png");// image loc

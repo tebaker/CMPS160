@@ -101,27 +101,11 @@ function initEventHandelers() {
 	scene = new Scene();
 	camera = new Camera();
 
-	let checkerBoardImage = new Image();
-	checkerBoardImage.src = "external/textures/checkerboard.png";
-
-	let flclImage = new Image();
-	flclImage.src = "external/textures/flcl.jpg";
-	
-	let catImage = new Image();
-	catImage.src = "external/textures/cat_diff.jpg";
-	
-	let teapotImage = new Image();
-	teapotImage.src = "external/textures/TeapotTex.png";
-	
-	let jamesHeadImage = new Image();
-	jamesHeadImage.src = "external/textures/merge3d.jpg";
-
 
 	// Creating shader program
 	defaultShaderProgram = createProgram(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER);
 
 	texShaderProgram = createProgram(gl, TEX_VSHADER, TEX_FSHADER);
-
 }// End initEventHandelers
 
 function initTextures(n, imgPath) {
@@ -152,4 +136,31 @@ function loadTexture(n, texture, u_Sampler, image) {
 	
 	// Set the texture unit 0 to the sampler
 	gl.uniform1i(u_Sampler, 0);
+}
+
+function loadImage(url, callback) {
+  var image = new Image();
+  image.src = url;
+  image.onload = callback;
+  return image;
+}
+
+function loadImages(urls, callback) {
+  var images = [];
+  var imagesToLoad = urls.length;
+
+  // Called each time an image finished
+  // loading.
+  var onImageLoad = function() {
+    --imagesToLoad;
+    // If all the images are loaded call the callback.
+    if (imagesToLoad == 0) {
+      callback(images);
+    }
+  };
+
+  for (var ii = 0; ii < imagesToLoad; ++ii) {
+    var image = loadImage(urls[ii], onImageLoad);
+    images.push(image);
+  }
 }

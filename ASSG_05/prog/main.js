@@ -42,6 +42,37 @@ function main() {
 	// Initializing all the event handlers defined as globals above
 	initEventHandelers();
 
+
+
+
+
+
+
+
+
+
+	let imagePathArray = [
+		"external/textures/checkerboard.png",
+		"external/textures/flcl.jpg",
+		"external/textures/cat_diff.pg",
+		"external/textures/TeapotTex.png",
+		"external/textures/merge3d.jpg"
+	];
+
+	let imagesToLoad = imagePathArray.length;
+
+	
+	
+
+
+
+
+
+
+
+
+
+	// Generating a world for the player to explore
 	createWorld();
 	
 
