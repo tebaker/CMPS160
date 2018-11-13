@@ -17,7 +17,18 @@ class Camera {
         this.viewMatrix = new Matrix4();
     }
 
-// setLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ)
+    changeFOV(fov, aspect, near, far) {
+    	this.projectionMatrix.setPerspective(fov, aspect, near, far);
+    }
+
+    changeToOrtho(){
+    	// left, right, bottom, top, near, far
+    	this.projectionMatrix.setOrtho(0, 1, 1, 0, 0.1, 10000);
+    }
+    
+    getProjMatrix() {
+    	return this.projectionMatrix;
+    }
 
     // Turning the camera left, right
     turnCameraRL(turnAmt) {

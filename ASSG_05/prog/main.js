@@ -35,6 +35,8 @@ let turnAmt = 1;
 
 let globalSize = 0.5;
 
+let cameraPerspectiveViewFlag = true;
+
 /**
  * Function called when the webpage loads.
  */
@@ -105,11 +107,18 @@ function main() {
 
 	tick();
 
-	document.getElementById("clearButton").addEventListener("click",
+	document.getElementById("changePerspective").addEventListener("click",
 		function myFunction() {
-			scene.clearGeometry();
-			// Generating a world for the player to explore
-			createWorld();
+			if(!cameraPerspectiveViewFlag) {
+				cameraPerspectiveViewFlag = true;
+				sendTextToHTML("Perspective", "changePerspective");
+			}
+			else {
+				cameraPerspectiveViewFlag = false;
+				sendTextToHTML("Orthogonal", "changePerspective");
+
+			}
+			
 		}
 	);
 

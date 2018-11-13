@@ -32,9 +32,6 @@ function createWorld() {
 		for(let i = 0; i < 10; ++i) {
 			// dirt: 0 - 99
 			if(a[10*i + j] <= 99) {
-
-				console.log("1");
-
 				let newTexCube = new NonRotatingTexCube(
 					globalSize*i*2,						  // x - left / right
 					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
@@ -45,9 +42,6 @@ function createWorld() {
 			}
 			// grass: 100 - 150
 			else if(a[10*i + j] > 99 && a[10*i + j] <= 149) {
-
-				console.log("2");
-
 				let newTexCube = new NonRotatingTexCube(
 					globalSize*i*2,						  // x - left / right
 					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
@@ -58,9 +52,6 @@ function createWorld() {
 			}
 			// snow:  149 - 200
 			else {
-
-				console.log("3");
-
 				let newTexCube = new NonRotatingTexCube(
 					globalSize*i*2,						  // x - left / right
 					a[10*i + j]/122 * globalSize - 2,	  	  // y - height
