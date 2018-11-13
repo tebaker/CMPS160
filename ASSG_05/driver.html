@@ -59,10 +59,24 @@
 		<label for="fovSliderLable">FOV Slider:</label>
 		<input type="range" min="10" max="200" value="30" class="slider" id="fovSlider">
 
+		<p></p>
+
+		<label for="nearSliderLable">Near Slider:</label>
+		<input type="range" min="0.1" max="200" value="1" class="slider" id="nearSlider">
+
+		<p></p>
+
+		<label for="farSliderLable">Far Slider:</label>
+		<input type="range" min="1" max="10000" value="100" class="slider" id="farSlider">
+
+		<p></p>
+
+		<button id="changePerspective">Perspective</button>
+		
 		<img id="worldMapImage" src="external/worldMap.png" width="10" height="10">
 		<img id="worldHeightMap" src="external/worldHeightMap.png" width="10" height="10">
 
-		<button id="changePerspective">Perspective</button>
+		
 
 		<script src="main.js"></script>
 	</body>
