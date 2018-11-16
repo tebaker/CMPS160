@@ -89,18 +89,22 @@ class NonRotatingTexCube extends Geometry {
 // viewMatrix.setLookAt(+/-=r/l, +/-=u/d, +/-=f/b, +/-=LR/LL, 0, -100, 0, 1, 0);
 
 		
-		let fov = document.getElementById("fovSlider").value;
+		var fov = document.getElementById("fovSlider").value;
+		var near = document.getElementById("nearSlider").value;
+		var far = document.getElementById("farSlider").value;
+
+		// console.log("near: " + near + " far: " + far + " fov: " + fov);
 
 		if(cameraPerspectiveViewFlag) {
 			camera.changeFOV(fov, canvas.width/canvas.height, 1, 100);
 		}
 		else {
-			camera.changeToOrtho();
+			// camera.changeToOrtho();
 		}
-  		
 
+			// camera.changeFOV(fov, canvas.width/canvas.height, 1, 100);
 
-  		projMatrix = camera.getProjMatrix();
+			projMatrix = camera.getProjMatrix();
 
 
 		gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
