@@ -18,48 +18,37 @@ function click(ev) {
 	let size = document.getElementById("sizeSlider").value/100;
 
 	let segCount = document.getElementById("segmentSlider").value;
-	
-	console.log(shapeFlag);
-	console.log("x: " + xCoord + " y: " + yCoord);
-	console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
-	console.log("size: " + size + " segCount: " + segCount);
 
-	
+	// console.log("x: " + xCoord + " y: " + yCoord);
+	// console.log("r: " + rColor + " g: " + gColor + " b: " + bColor);
+	// console.log("size: " + size + " segCount: " + segCount);
+
+	console.log(shapeFlag);
 
 	switch(shapeFlag) {
 	case "square":
-		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
+		let newSquare = new SpinningSquare(xCoord, yCoord, rColor, gColor, bColor, size);
 		scene.addGeometry(newSquare);
 		break;
 
 	case "triangle":
-		let newTriangle = new FluctuatingTriangle(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
+		let newTriangle = new FluctuatingTriangle(xCoord, yCoord, rColor, gColor, bColor, size);
 		scene.addGeometry(newTriangle);
 		break;
 
 	case "circle":
-		let newCircle = new RandomCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount, solidColorFlag);
+		let newCircle = new RandomCircle(xCoord, yCoord, rColor, gColor, bColor, size, segCount);
 		scene.addGeometry(newCircle);
 		break;
 
 	case "cube":
-		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
+		let newCube = new TiltedCube(xCoord, yCoord, rColor, gColor, bColor, size);
 		scene.addGeometry(newCube);
 		break;
 
-	case "texCube":
-		let newTexCube = new TexCube(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag, "external/textures/checkerboard.png");
-		scene.addGeometry(newTexCube);
-		break;
-
 	case "obj":
-		let newOBJ = new LoadedOBJ(xCoord, yCoord, rColor, gColor, bColor, size, objString, solidColorFlag);
+		let newOBJ = new LoadedOBJ(xCoord, yCoord, rColor, gColor, bColor, size, objString);
 		scene.addGeometry(newOBJ);
-		break;
-
-	case "texTest":
-		let newTexSquare = new SpinningTexSquare(xCoord, yCoord, rColor, gColor, bColor, size, solidColorFlag);
-		scene.addGeometry(newTexSquare);
 		break;
 
 	default:
@@ -83,6 +72,8 @@ function clearCanvas(gl) {
 
 // Definind all the event handlers. Global declerations in main
 function initEventHandelers() {
+	scene = new Scene();
+
 	// Retrieve <canvas> element
 	canvas = document.getElementById('webgl');
 	if(!canvas) {
@@ -97,70 +88,35 @@ function initEventHandelers() {
 		return;
 	}
 
-	// Creating scene that will hold all geometries
-	scene = new Scene();
-	camera = new Camera();
-
-
-	// Creating shader program
-	defaultShaderProgram = createProgram(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER);
-
-	texShaderProgram = createProgram(gl, TEX_VSHADER, TEX_FSHADER);
-}// End initEventHandelers
-
-function initTextures(n, imgPath) {
-	let texture = gl.createTexture();
-
-	u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
-
-	let image = new Image();
-
-	image.onload = function(){
-		loadTexture(n, texture, u_Sampler, image);
+	// Initialize shaders
+	if(!initShaders(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER)) {
+		console.log('Failed to initialize shaders');
+		return;
 	}
 
-	image.src = imgPath;
-}
+	// Get the location of attribute variable a_Position
+	a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+	if (a_Position < 0) {
+		console.log('Fail to get the storage location of a_Position');
+		return;
+	} 
 
-function loadTexture(n, texture, u_Sampler, image) {
-	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-	// Enable the texture unit 0
-	gl.activeTexture(gl.TEXTURE0);
-	// Bind the texture object to the target
-	gl.bindTexture(gl.TEXTURE_2D, texture);
-	
-	// Set the texture parameters
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-	// Set the texture image
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
-	
-	// Set the texture unit 0 to the sampler
-	gl.uniform1i(u_Sampler, 0);
-}
+	u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+	if (!u_ModelMatrix) { 
+		console.log('Failed to get the storage location of u_ModelMatrix');
+		return;
+	}
 
-function loadImage(url, callback) {
-  var image = new Image();
-  image.src = url;
-  image.onload = callback;
-  return image;
-}
+	/*// Get the location of attribute variable of a_PointSize
+	a_PointSize = gl.getAttribLocation(gl.program, 'a_PointSize');
+	if (a_PointSize < 0) {
+		console.log('Fail to get the storage location of a_PointSize');
+		return;
+	}*/
 
-function loadImages(urls, callback) {
-  var images = [];
-  var imagesToLoad = urls.length;
-
-  // Called each time an image finished
-  // loading.
-  var onImageLoad = function() {
-    --imagesToLoad;
-    // If all the images are loaded call the callback.
-    if (imagesToLoad == 0) {
-      callback(images);
-    }
-  };
-
-  for (var ii = 0; ii < imagesToLoad; ++ii) {
-    var image = loadImage(urls[ii], onImageLoad);
-    images.push(image);
-  }
-}
+	u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
+	if(!u_FragColor) {
+		console.log('Failed to get u_FragColor variable');
+		return;
+	}
+}// End initEventHandelers

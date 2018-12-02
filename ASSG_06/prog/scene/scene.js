@@ -12,11 +12,6 @@ class Scene {
 	*/
 	constructor() {
 		this.geometries = []; // Geometries to be drawn
-
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		// Enable the hidden surface removal function
-		gl.enable(gl.DEPTH_TEST);
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);	
 	}
 
 	/**
@@ -33,15 +28,10 @@ class Scene {
 	*/
 	clearGeometry() {
 		this.geometries = [];
-	}
 
-	// Popping out-of-bounds shape from scene to save frames
-	// popShape(thisShape) {
-	// 	let index = geometries.indexOf(thisShape);
-	// 	if(index > -1) {
-	// 		geometries.splice(index, 1);
-	// 	}
-	// }
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+	}
 	
    /**
    * Responsible for updating the geometry's modelMatrix for animation.
@@ -52,6 +42,9 @@ class Scene {
 			this.geometries[i].updateAnimation();
 		}
 
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+
 		scene.render();
 	}
 
@@ -59,10 +52,8 @@ class Scene {
 	* Renders all the Geometry within the scene.
 	*/
 	render() {
-		// Enable the hidden surface removal function
-		gl.enable(gl.DEPTH_TEST);
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
 		gl.clear(gl.COLOR_BUFFER_BIT);
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 		// Looping through every geometry
 		for(let i = 0; i < this.geometries.length; ++i) {

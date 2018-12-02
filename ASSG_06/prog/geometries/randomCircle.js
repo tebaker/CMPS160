@@ -14,17 +14,13 @@ class RandomCircle extends Circle {
 	* @param {Number} centerX The central x-position of the Randomcircle
 	* @param {Number} centerY The central y-position of the Randomcircle
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal, colorFlag) {
+	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal) {
 		super(centerX, centerY, rVal, gVal, bVal, sizeVal, segVal);
 
 		this.centerX = centerX;
 		this.centerY = centerY;
 
-		this.color = {r: rVal, g: gVal, b: bVal};
-
 		super.shape = "randomCricle";
-
-		this.isSolidColor = colorFlag;
 
 		this.modelMatrix = new Matrix4();
 
@@ -94,34 +90,9 @@ class RandomCircle extends Circle {
 	* Overloaded base class renders in order to update animaton / movement
 	*/
 	render() {
-
-		// Setting shader to the default shader
-		useShader(gl, defaultShaderProgram);
-
-		// Get the location of attribute variable a_Position
-		a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-		if (a_Position < 0) {
-			console.log('Fail to get the storage location of a_Position');
-			return;
-		}
-
-		u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-		if (!u_ModelMatrix) { 
-			console.log('Failed to get the storage location of u_ModelMatrix');
-			return;
-		}
-
-		// Get the location of attribute variable of a_PointSize
-		a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-		if (a_Color < 0) {
-			console.log('Fail to get the storage location of a_Color');
-			return;
-		}
-
-		
 		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
 
-		let renderVertices = new Float32Array(this.vertices.getArray(this.isSolidColor, this.color.r, this.color.g, this.color.b));
+		let renderVertices = new Float32Array(this.vertices.getArray());
 		let n = this.vertices.getLength() / 3;
 
 		sendUniformMat4ToGLSL(u_ModelMatrix, this.modelMatrix.elements);

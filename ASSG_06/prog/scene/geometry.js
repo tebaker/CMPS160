@@ -19,8 +19,6 @@ class Geometry {
 		this.vertices;
 		// Holding toggle for wireframe option
 		this.wireframe = false;
-		// Holding toggle for solid vs. rainbow color option
-		this.solidColor = solidColorFlag;
 	}
 
 	/**
@@ -28,8 +26,8 @@ class Geometry {
 	*/
 	render() {
 		sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);
-		
-		let renderVertices = new Float32Array(this.vertices.getArray(this.solidColor, this.color.r, this.color.g, this.color.b));
+
+		let renderVertices = new Float32Array(this.vertices.getArray());
 		let n = this.vertices.getLength() / 3;
 
 		sendAttributeBufferToGLSL(renderVertices, n, this.vertices);

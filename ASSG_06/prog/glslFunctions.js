@@ -15,18 +15,9 @@ function sendAttributeBufferToGLSL(data, dataCount) {
 	// gl.bufferData(gl.ARRAY_BUFFER, attribName, gl.STATIC_DRAW);
 	gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
-
-	// Getting the bytes per element
-	let FSIZE = data.BYTES_PER_ELEMENT;
-
-
-	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE*6, 0);
+	gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
 
 	gl.enableVertexAttribArray(a_Position);
-
-	gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE*6, FSIZE*3);
-
-	gl.enableVertexAttribArray(a_Color);
 	
 	tellGLSLToDrawCurrentBuffer(dataCount);
 }
@@ -37,12 +28,7 @@ function sendAttributeBufferToGLSL(data, dataCount) {
  * @param {Integer} pointCount The amount of vertices being drawn from the buffer.
  */
 function tellGLSLToDrawCurrentBuffer(dataCount) {
-	if(wireFrameFlag) {
-		gl.drawArrays(gl.LINE_STRIP, 0, dataCount);
-	}
-	else {
-		gl.drawArrays(gl.TRIANGLES, 0, dataCount);
-	}
+	gl.drawArrays(gl.TRIANGLES, 0, dataCount);
 }
 
 /**

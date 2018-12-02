@@ -76,27 +76,6 @@ class Circle extends Geometry {
 				0.0 // z
 			);
 
-		/*TRIANGLE i COLORS*/
-			// c0
-			this.vertices.addColors(
-				Math.random(),
-				Math.random(),
-				Math.random()
-			)
-
-			// c1
-			this.vertices.addColors(
-				Math.random(),
-				Math.random(),
-				Math.random()
-			)
-			// c2
-			this.vertices.addColors(
-				Math.random(),
-				Math.random(),
-				Math.random()
-			)
-
 			holdVertexX = nextVertexX;
 			holdVertexY = nextVertexY;
 		}
@@ -126,27 +105,6 @@ class Circle extends Geometry {
 			(centerY + nextVertexY), // y
 			0.0 // z
 		);
-
-	/*TRIANGLE length - 1 COLORS*/
-		// c0
-		this.vertices.addColors(
-			Math.random(),
-			Math.random(),
-			Math.random()
-		)
-
-		// c1
-		this.vertices.addColors(
-			Math.random(),
-			Math.random(),
-			Math.random()
-		)
-		// c2
-		this.vertices.addColors(
-			Math.random(),
-			Math.random(),
-			Math.random()
-		)
 
 
 	}// End generateCircleVertices

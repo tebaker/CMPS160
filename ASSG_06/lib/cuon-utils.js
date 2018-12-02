@@ -1,29 +1,22 @@
 // cuon-utils.js (c) 2012 kanda and matsuda
 /**
- * Create a program object and store it in programs
+ * Create a program object and make current
  * @param gl GL context
  * @param vshader a vertex shader program (string)
  * @param fshader a fragment shader program (string)
- * @return a WebGL shader program
+ * @return true, if the program object was created and successfully made current 
  */
-function createShader(gl, vshader, fshader) {
+function initShaders(gl, vshader, fshader) {
   var program = createProgram(gl, vshader, fshader);
   if (!program) {
     console.log('Failed to create program');
-    return null;
+    return false;
   }
 
-  return program;
-}
-
-/**
- * Sets the current shading program used when drawing
- * @param gl GL context
- * @param program A WebGl shading program
- */
-function useShader(gl, program) {
   gl.useProgram(program);
   gl.program = program;
+
+  return true;
 }
 
 /**
@@ -71,9 +64,7 @@ function createProgram(gl, vshader, fshader) {
  * Create a shader object
  * @param gl GL context
  * @param type the type of the shader object to be created
- *		-> Either gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
  * @param source shader program (string)
- *		-> a DOMString containing GLSL source code
  * @return created shader object, or null if the creation has failed.
  */
 function loadShader(gl, type, source) {
@@ -102,7 +93,7 @@ function loadShader(gl, type, source) {
   return shader;
 }
 
-/**
+/** 
  * Initialize and get the rendering for WebGL
  * @param canvas <cavnas> element
  * @param opt_debug flag to initialize the context for debugging
