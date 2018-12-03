@@ -12,9 +12,9 @@ let turnAmt = 0.02;
 
 let mvpMatrix;
 
-let eyeX = 0.0;
+let eyeX = 3.0;
 let eyeY = 0.0;
-let eyeZ = -10.0;
+let eyeZ = -13.0;
 
 let lookAtR = 0.0;
 let lookAtL = 0.0;
@@ -73,6 +73,13 @@ function main() {
         0.1, 0.0, 0.1,
         0.15);
     scene.addGeometry(newCube8);
+
+    let sunCube = new TiltedCube(
+        -0.8, 0.8, 0.0,
+        0.99, 0.99, 0.99,
+        0.05);
+    scene.addGeometry(sunCube);
+
     camera.moveCameraZ(0.0);
 
     // WASD keydown inputs for camera movement

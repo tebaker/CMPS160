@@ -13,7 +13,7 @@ class TiltedCube extends Geometry {
 	* @param {Number} centerX The center x-position of the TiltedCube
 	* @param {Number} centerY The center y-position of the TiltedCube
 	*/
-	constructor(centerX, centerY, rVal, gVal, bVal, sizeVal) {
+	constructor(centerX, centerY, centerZ, rVal, gVal, bVal, sizeVal) {
 		super();
 		super.shape = "TiltedCube";
 		super.centerPoint = {x: centerX, y: centerY};
@@ -29,7 +29,7 @@ class TiltedCube extends Geometry {
 		this.modelMatrix = new Matrix4();
 
 		// Translation directions
-		this.currentAngle = 1;
+		this.currentAngle = 0.5;
 	}
 
 	// will update model direction and travel location
@@ -39,20 +39,10 @@ class TiltedCube extends Geometry {
 		let rotateMatrix = new Matrix4();
 		let translateMatrix2 = new Matrix4();
 
-		//T
-		translateMatrix1.setTranslate(-this.centerX, -this.centerY, 0);
-
-			this.modelMatrix = translateMatrix1.multiply(this.modelMatrix);
-
 		//R
 		rotateMatrix.setRotate(this.currentAngle, this.currentAngle, this.currentAngle, this.currentAngle);
 
-			this.modelMatrix = rotateMatrix.multiply(this.modelMatrix);
-
-		//T
-		translateMatrix2.setTranslate(this.centerX, this.centerY, 0);
-
-			this.modelMatrix = translateMatrix2.multiply(this.modelMatrix);
+        this.modelMatrix = rotateMatrix.multiply(this.modelMatrix);
 
 		// Pass the rotation matrix to the vertex shader
 		gl.uniformMatrix4fv(u_ModelMatrix, false, this.modelMatrix.elements);
