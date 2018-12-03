@@ -8,7 +8,16 @@ let scene, camera;
 
 // How far the camera moves any one step
 let movementAmt = 0.2;
-let turnAmt = 1.0;
+let turnAmt = 0.02;
+
+let mvpMatrix;
+
+let eyeX = 0.0;
+let eyeY = 0.0;
+let eyeZ = -10.0;
+
+let lookAtR = 0.0;
+let lookAtL = 0.0;
 
 /**
  * Function called when the webpage loads.
@@ -18,7 +27,7 @@ function main() {
     initEventHandelers();
     
     let newCube1 = new Cube(
-        0.0, 0.0, 0.0,
+        0.0, -0.15, 0.0,
         0.9, 0.1, 0.1,
         0.1);
     scene.addGeometry(newCube1);
@@ -42,7 +51,7 @@ function main() {
     scene.addGeometry(newCube4);
 
     let newCube5 = new Cube(
-        -0.1, 0.0, -0.11,
+        -0.1, 0.1, -0.11,
         0.9, 0.5, 0.9,
         0.1);
     scene.addGeometry(newCube5);
@@ -64,7 +73,6 @@ function main() {
         0.1, 0.0, 0.1,
         0.15);
     scene.addGeometry(newCube8);
-
     camera.moveCameraZ(0.0);
 
     // WASD keydown inputs for camera movement
@@ -74,33 +82,37 @@ function main() {
         // W
         if (event.keyCode == 87) {
             console.log("W");
-            camera.moveCameraZ(-movementAmt);
+
+            eyeZ += movementAmt;
         }
         // A
         if (event.keyCode == 65) {
             console.log("A");
-            camera.moveCameraX(-movementAmt);
+
+            eyeX += movementAmt;
         }
         // S
         if (event.keyCode == 83) {
             console.log("S");
-            camera.moveCameraZ(movementAmt);
+
+            eyeZ -= movementAmt;
         }
         // D
         if (event.keyCode == 68) {
             console.log("D");
-            camera.moveCameraX(movementAmt);
+
+            eyeX -= movementAmt;
         }
         // Camera rotation
         // J
         if (event.keyCode == 74) {
             console.log("J");
-            camera.turnCameraRL(-turnAmt);
+            lookAtL += turnAmt;
         }
         // L
         if (event.keyCode == 76) {
             console.log("L");
-            camera.turnCameraRL(turnAmt);
+            lookAtL -= turnAmt;
         }
         // Nromal vs. Phong shading
         // N

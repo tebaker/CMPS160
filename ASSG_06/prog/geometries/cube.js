@@ -43,7 +43,7 @@ class Cube extends Geometry {
         var mvpMatrix = new Matrix4();
 
         mvpMatrix.setPerspective(10, canvas.width / canvas.height, 1, 100);
-        mvpMatrix.lookAt(0, 0, -10, 0, 0, 0, 0, 1, 0);
+        mvpMatrix.lookAt(eyeX, eyeY, eyeZ, lookAtL, lookAtR, 0, 0, 1, 0);
         gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
 
         sendUniformVec4ToGLSL(u_FragColor, [this.color.r, this.color.g, this.color.b, 1.0]);

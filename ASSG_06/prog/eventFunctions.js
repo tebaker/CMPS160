@@ -57,5 +57,6 @@ function initEventHandelers() {
     
     scene = new Scene();
     camera = new Camera();
+    mvpMatrix = new Matrix4();
 
 }// End initEventHandelers
