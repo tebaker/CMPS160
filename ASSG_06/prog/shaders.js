@@ -4,7 +4,9 @@ let ASSIGN1_VSHADER =
 `   attribute vec4 a_Position;
 
     uniform mat4 u_ModelMatrix;
-	uniform mat4 u_MvpMatrix;
+    uniform mat4 u_MvpMatrix;
+
+    varying vec4 v_Color;
 
     void main() {
         gl_Position = u_MvpMatrix * u_ModelMatrix * a_Position;

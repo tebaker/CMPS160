@@ -1,7 +1,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title> "Talon's Assignment 6 </title>
+		<title> "Talon's Assignment 7 </title>
 		<!-- Include external libraries -->
 		<script src = "lib/webgl-utils.js"></script>
 		<script src = "lib/webgl-debug.js"></script>
@@ -14,7 +14,6 @@
 		<!-- Include internal functions -->
 		<script src = "prog/eventFunctions.js"></script>
 		<script src = "prog/glslFunctions.js"></script>
-		<script src = "prog/htmlFunctions.js"></script>
 
 		<!-- Include time and animation functions -->
 		<script src = "prog/tick.js"></script>
@@ -45,10 +44,14 @@
 	</head>
 
 	<body onload = "main()">
-		<p> Talon Baker Assignment 6 </p>
+		<p> Talon Baker Assignment 7 </p>
 
-		<canvas id="webgl" width="500" height="500">
+		<canvas id="webgl" width="500" height="500" style="position:absolute; z-index: 0">
 			Please use a browser that supports "canvas"
+        </canvas>
+
+        <canvas id="hud" width="500" height="500" style="position:absolute; z-index: 1">
+            Please use a browser that supports "canvas"
         </canvas>
 
 		<script src="main.js"></script>

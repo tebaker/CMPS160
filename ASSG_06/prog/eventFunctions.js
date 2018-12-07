@@ -1,3 +1,25 @@
+function click(ev) {
+    let xCoord = ev.clientX; // x coord of a mouse pointer
+    let yCoord = ev.clientY; // y coord of a mouse pointer
+    let rect = ev.target.getBoundingClientRect();
+
+
+
+    if (rect.left <= xCoord && xCoord < rect.right && rect.top <= yCoord && yCoord < rect.bottom) {
+        var x_in_canvas = xCoord - rect.left;
+        var y_in_canvas = rect.bottom - yCoord;
+    }
+
+    // Sending the current x, y data to be updated in the HTML
+    console.log("x: " + x_in_canvas + " y: " + y_in_canvas);
+
+    scene.render();
+
+    var pixels = new Uint8Array(4);
+    gl.readPixels(xCoord, yCoord, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    
+    console.log(pixels);
+}
 /**
 * Renders the scene on the HTML canvas.
 */
@@ -54,6 +76,10 @@ function initEventHandelers() {
     }
 
     u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
+    if (!u_MvpMatrix) {
+        console.log('Failed to get u_MvpMatrix variable');
+        return;
+    }
     
     scene = new Scene();
     camera = new Camera();
