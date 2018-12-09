@@ -26,22 +26,22 @@ function click(ev) {
 
     // Purple cube selected
     if(bVal == 76) {
-        cubeSelection = "purple";
-        posMsg = "x: 0.5, y: 0.0, z: 0.1"
+        colorMsg = "CUBE COLOR " + "r: " + rVal + " g: " + gVal + " b: " + bVal;;
+        posMsg = "CUBE POS       x: 0.5, y: 0.0, z: 0.1"
     } // Black cube selected
     else if(bVal == 25) {
-        cubeSelection = "black";
-        posMsg = "x: 0.2, y: 0.0, z: 0.2"
+        colorMsg = "CUBE COLOR " + "r: " + rVal + " g: " + gVal + " b: " + bVal;
+        posMsg = "CUBE POS       x: 0.2, y: 0.0, z: 0.2"
     } // Blue cube selected 
     else if(bVal == 229) {
-        cubeSelection = "blue";
-        posMsg = "x: -0.7,y:  0.0, z: 0.0"
+        colorMsg = "CUBE COLOR " + "r: " + rVal + " g: " + gVal + " b: " + bVal;
+        posMsg = "CUBE POS       x: -0.7,y:  0.0, z: 0.0"
     }
     else {
         cubeSelection = "none";
-        drawHudMsg("CUBE COLOR no cube selected", "CUBE POS       no cube selected");
+        drawHudMsg(colorMsg, posMsg);
     }
-    drawHudMsg("CUBE COLOR " + "r: " + rVal + " g: " + gVal + " b: " + bVal, "CUBE POS       " + posMsg);
+    drawHudMsg(colorMsg, posMsg);
 }
 /**
 * Renders the scene on the HTML canvas.

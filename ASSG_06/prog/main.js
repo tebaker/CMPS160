@@ -19,7 +19,14 @@ let eyeZ = -13.0;
 let lookAtL = 0.0;
 let lookAtR = 0.0;
 
-let posMsg;
+let colorMsg = "CUBE COLOR no cube selected";
+let posMsg = "CUBE POS       no cube selected";
+
+let masterTime = performance.now();
+
+let tickFlag = false;
+
+let beat = 0;
 
 let up, down, left, right = 0.0;
 
@@ -98,8 +105,6 @@ function main() {
     camera.moveCameraZ(0.0);
 
     scene.render();
-
-    drawHudMsg("CUBE COLOR no cube selected", "CUBE POS       no cube selected");
 
     // WASD keydown inputs for camera movement
     // JL keydown inputs for camera rotation
