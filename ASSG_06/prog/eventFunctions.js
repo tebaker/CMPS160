@@ -18,7 +18,30 @@ function click(ev) {
     var pixels = new Uint8Array(4);
     gl.readPixels(xCoord, yCoord, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
     
+    let rVal = pixels[0];
+    let gVal = pixels[1];
+    let bVal = pixels[2];
+
     console.log(pixels);
+
+    // Purple cube selected
+    if(bVal == 76) {
+        cubeSelection = "purple";
+        posMsg = "x: 0.5, y: 0.0, z: 0.1"
+    } // Black cube selected
+    else if(bVal == 25) {
+        cubeSelection = "black";
+        posMsg = "x: 0.2, y: 0.0, z: 0.2"
+    } // Blue cube selected 
+    else if(bVal == 229) {
+        cubeSelection = "blue";
+        posMsg = "x: -0.7,y:  0.0, z: 0.0"
+    }
+    else {
+        cubeSelection = "none";
+        drawHudMsg("CUBE COLOR no cube selected", "CUBE POS       no cube selected");
+    }
+    drawHudMsg("CUBE COLOR " + "r: " + rVal + " g: " + gVal + " b: " + bVal, "CUBE POS       " + posMsg);
 }
 /**
 * Renders the scene on the HTML canvas.
@@ -36,19 +59,27 @@ function clearCanvas(gl) {
 
 // Definind all the event handlers. Global declerations in main
 function initEventHandelers() {
-	// Retrieve <canvas> element
+	// Retrieve first <canvas> element
 	canvas = document.getElementById('webgl');
 	if(!canvas) {
 		console.log("Failed to retrieve the <canvas> element");
 		return;
-	}
+    }
 
-	// Get the rendering ontext for WebGL
-	gl = getWebGLContext(canvas);
-	if(!gl) {
-		console.log('Failed to get the rendering context for WebGL');
-		return;
-	}
+    // Get the rendering ontext for WebGL
+    gl = getWebGLContext(canvas);
+    if (!gl) {
+        console.log('Failed to get the rendering context for WebGL');
+        return;
+    }
+
+    hud = document.getElementById('hud');
+    if (!hud) {
+        console.log("Failed to retrieve the <hud> element");
+        return;
+    }
+
+    ctx = hud.getContext('2d');
 
 	// Initialize shaders
 	if(!initShaders(gl, ASSIGN1_VSHADER, ASSIGN1_FSHADER)) {

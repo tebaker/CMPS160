@@ -1,7 +1,7 @@
 // All the event handlers
-let canvas, gl;
+let canvas, hud, gl, ctx;
 let a_Position;
-let u_FragColor, u_ModelMatrix, u_MvpMatrix, u_Clicked;
+let u_FragColor, u_ModelMatrix, u_MvpMatrix;
 
 // Holds every geometry in the scene
 let scene, camera;
@@ -16,8 +16,14 @@ let eyeX = 3.0;
 let eyeY = 0.0;
 let eyeZ = -13.0;
 
-let lookAtR = 0.0;
 let lookAtL = 0.0;
+let lookAtR = 0.0;
+
+let posMsg;
+
+let up, down, left, right = 0.0;
+
+let cubeSelection = "none";
 
 /*
 0.1 = 22.5
@@ -38,57 +44,54 @@ function main() {
 	// Initializing all the event handlers defined as globals above
     initEventHandelers();
     
-    let newCube1 = new Cube(
-        0.0, -0.15, 0.0,
-        0.9, 0.1, 0.1,
-        0.1);
-    scene.addGeometry(newCube1);
-
+    // Purple
     let newCube2 = new Cube(
         0.5, 0.0, 0.1,
         0.2, 0.1, 0.3,
-        0.3);
+        0.5);
     scene.addGeometry(newCube2);
 
+    // Black
     let newCube3 = new Cube(
         0.2, 0.0, 0.2,
         0.1, 0.1, 0.1,
-        0.2);
+        0.4);
     scene.addGeometry(newCube3);
 
-    let newCube4 = new Cube(
-        -0.3, 0.0, -0.1,
-        0.9, 0.9, 0.1,
-        0.05);
-    scene.addGeometry(newCube4);
+    // let newCube4 = new Cube(
+    //     -0.3, 0.0, -0.1,
+    //     0.9, 0.9, 0.1,
+    //     0.05);
+    // scene.addGeometry(newCube4);
 
-    let newCube5 = new Cube(
-        -0.1, 0.1, -0.11,
-        0.9, 0.5, 0.9,
-        0.1);
-    scene.addGeometry(newCube5);
+    // let newCube5 = new Cube(
+    //     -0.1, 0.1, -0.11,
+    //     0.9, 0.5, 0.9,
+    //     0.1);
+    // scene.addGeometry(newCube5);
 
-    let newCube6 = new Cube(
-        -0.5, 0.0, 0.11,
-        0.1, 0.5, 0.9,
-        0.1);
-    scene.addGeometry(newCube6);
+    // let newCube6 = new Cube(
+    //     -0.5, 0.0, 0.11,
+    //     0.1, 0.5, 0.9,
+    //     0.1);
+    // scene.addGeometry(newCube6);
 
+    // Blue
     let newCube7 = new Cube(
         -0.7, 0.0, 0.0,
         0.1, 0.1, 0.9,
-        0.2);
+        0.4);
     scene.addGeometry(newCube7);
 
-    let newCube8 = new Cube(
-        -0.8, 0.0, -0.5,
-        0.1, 0.0, 0.1,
-        0.15);
-    scene.addGeometry(newCube8);
+    // let newCube8 = new Cube(
+    //     -0.8, 0.0, -0.5,
+    //     0.1, 0.0, 0.1,
+    //     0.15);
+    // scene.addGeometry(newCube8);
 
     let sunCube = new TiltedCube(
         -0.8, 0.8, 0.0,
-        0.9, 0.9, 0.9,
+        1.0, 0.9, 0.9,
         0.05);
     scene.addGeometry(sunCube);
 
@@ -124,44 +127,38 @@ function main() {
 
             eyeX -= movementAmt;
         }
-        // Camera rotation
-        // J
-        if (event.keyCode == 74) {
-            console.log("J");
-            lookAtL += turnAmt;
+
+        // UP
+        if (event.keyCode == 38) {
+            console.log("UP");
+            
         }
-        // L
-        if (event.keyCode == 76) {
-            console.log("L");
-            lookAtL -= turnAmt;
+        // DOWN
+        if (event.keyCode == 40) {
+            console.log("DOWN");
+
         }
-        // Nromal vs. Phong shading
-        // N
-        if (event.keyCode == 78) {
-            console.log("N");
+        // LEFT
+        if (event.keyCode == 37) {
+            console.log("LEFT");
+
+        }
+        // RIGHT
+        if (event.keyCode == 39) {
+            console.log("RIGHT");
+
         }
     });
 
-    gl.uniform1i(u_Clicked, false);
 
     // Function for when the mouse is pressed
     canvas.onmousedown = function (ev) {
-        gl.uniform1i(u_Clicked, true);
         click(ev);
     }
 
     // Resetting the mouse down flag to false
     document.onmouseup = function () {
-        gl.uniform1i(u_Clicked, false);
     };
-
-    // // Check for if mouse is being dragged
-    // canvas.onmousemove = function (ev) {
-    //     if (isMouseDown) {
-    //         // console.log("I'm in here! Close the door!");
-    //         click(ev);
-    //     }
-    // };
 
 	tick();
 }// End main

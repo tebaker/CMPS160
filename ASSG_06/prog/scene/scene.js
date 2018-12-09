@@ -11,9 +11,10 @@ class Scene {
 	* @constructor
 	*/
     constructor() {
-        this.geometries = []; // Geometries to be drawn
+        this.geometries = []; 
+        this.length = 0;
 
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clearColor(0.9, 0.9, 1.0, 1.0);
         // Enable the hidden surface removal function
         gl.enable(gl.DEPTH_TEST);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -26,6 +27,9 @@ class Scene {
 	*/
     addGeometry(geometry) {
         this.geometries.push(geometry);
+
+        this.length += 1;
+
     }
 
 	/**
@@ -33,6 +37,8 @@ class Scene {
 	*/
     clearGeometry() {
         this.geometries = [];
+
+        this.length = 0;
     }
 
     // Popping out-of-bounds shape from scene to save frames
