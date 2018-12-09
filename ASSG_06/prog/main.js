@@ -99,6 +99,8 @@ function main() {
 
     scene.render();
 
+    drawHudMsg("CUBE COLOR no cube selected", "CUBE POS       no cube selected");
+
     // WASD keydown inputs for camera movement
     // JL keydown inputs for camera rotation
     document.addEventListener('keydown', function (event) {
