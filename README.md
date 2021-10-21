@@ -19,3 +19,7 @@
 ## Project 5:
 ![assg2_screenshot](/ASSG_05/screenshot.png)
 * [Texture, Camera Movement](https://rawgit.com/tebaker/CMPS160/master/ASSG_05/driver.html)
+
+## Project 6:
+![assg2_screenshot](/ASSG_06/screenshot.png)
+* [Point casting, object selection - Needs to be run in local server](https://rawgit.com/tebaker/CMPS160/master/ASSG_06/driver.html)
