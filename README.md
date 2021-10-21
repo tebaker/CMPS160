@@ -6,16 +6,16 @@
 
 ## Project 2:
 ![assg2_screenshot](/ASSG_02/screenshot.png)
-* [Painting Points](https://rawgit.com/tebaker/CMPS160/master/ASSG_02/driver.html)
+* [Painting Shapes](https://rawgit.com/tebaker/CMPS160/master/ASSG_02/driver.html)
 
 ## Project 3:
 ![assg2_screenshot](/ASSG_03/screenshot.png)
-* [Painting Points](https://rawgit.com/tebaker/CMPS160/master/ASSG_03/driver.html)
+* [Rotation, Translation, Scale](https://rawgit.com/tebaker/CMPS160/master/ASSG_03/driver.html)
 
 ## Project 4:
 ![assg2_screenshot](/ASSG_04/screenshot.png)
-* [Painting Points](https://rawgit.com/tebaker/CMPS160/master/ASSG_04/driver.html)
+* [Texture, Camera Movement](https://rawgit.com/tebaker/CMPS160/master/ASSG_04/driver.html)
 
 ## Project 5:
 ![assg2_screenshot](/ASSG_05/screenshot.png)
-* [Painting Points](https://rawgit.com/tebaker/CMPS160/master/ASSG_05/driver.html)
+* [Casting Point, Object Recognition - Needs to be run on local server](https://rawgit.com/tebaker/CMPS160/master/ASSG_05/driver.html)
